@@ -50,10 +50,10 @@ export default class App {
 		};
 
 		this.addPointLight(this.pointLightObj3);
+		this.addAmbientLight();
 	}
 
 	createScene() {
-
 		this.scene = new THREE.Scene();
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 		this.renderer.setSize(this.width, this.height);
@@ -305,7 +305,7 @@ export default class App {
 	}
 
 	draw() {
-		const boxSize = 3;
+		const boxSize = 4;
 		const meshParams = {
 			color: "#000",
 			metalness: 0,
