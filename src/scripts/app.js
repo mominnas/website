@@ -60,6 +60,7 @@ export default class App {
 
 		this.renderer.shadowMap.enabled = true;
 		//this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+		//this.renderer.shadowMap.type = THREE.PCFShadowMap;
 		// Variance Shadow Map for the building models, *might impact performance*
 		this.renderer.shadowMap.type = THREE.VSMShadowMap;
 
