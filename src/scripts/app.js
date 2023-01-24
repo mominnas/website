@@ -14,9 +14,12 @@ export default class App {
 		this.bgColor = window
 			.getComputedStyle(document.body, null)
 			.getPropertyValue("background-color");
-		this.gridSize = 40;
-		// List of buildings in the scene
+		
+			this.gridSize = 30;
+		
+			// List of buildings in the scene
 		this.buildings = [];
+		
 		// this.fogConfig = {
 		// 	color: '#36454F',
 		// 	//color: '#353c3c',
@@ -50,7 +53,6 @@ export default class App {
 		};
 
 		this.addPointLight(this.pointLightObj3);
-		this.addAmbientLight();
 	}
 
 	createScene() {
