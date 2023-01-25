@@ -10,14 +10,14 @@ THREE.OBJLoader = OBJLoader;
 
 export default class App {
 	init() {
+		
 		this.group = new THREE.Object3D();
-		this.bgColor = window
-			.getComputedStyle(document.body, null)
-			.getPropertyValue("background-color");
 		
-			this.gridSize = 30;
+		this.bgColor = window.getComputedStyle(document.body, null).getPropertyValue("background-color");
 		
-			// List of buildings in the scene
+		this.gridSize = 30;
+		
+		// List of buildings in the scene
 		this.buildings = [];
 		
 		// this.fogConfig = {
@@ -35,27 +35,32 @@ export default class App {
 		this.addCameraControls();
 		this.addFloor();
 		this.addBackgroundShape();
+		
 		// Load models from private repository
 		this.loadModels(
-			"https://raw.githubusercontent.com/ca-john/ca-john.github.io/main/homepage_buildings.obj",
+			"https://raw.githubusercontent.com/ca-john/ca-john.github.io/main/buildings_new.obj",
 			this.onLoadModelsComplete.bind(this)
 		);
+		
 		this.animate();
 
-		this.pointLightObj3 = {
-			color: "#7393B3",
-			intensity: 10,
-			position: {
-				x: 80,
-				y: 110,
-				z: -80,
-			},
-		};
+		// Add a point light to illuminate the buildings
+		const pointLightColor = "#7393B3";
+		const pointLightIntensity = 15;
+		const pointLight = new THREE.PointLight(pointLightColor, pointLightIntensity);
+		pointLight.position.set(80, 110, -80);
+		this.scene.add(pointLight);
 
-		this.addPointLight(this.pointLightObj3);
+
+		const helperSize = 5;
+		const pLightHelper = new THREE.PointLightHelper(pointLight, helperSize);
+		this.scene.add(pLightHelper);
+
+
 	}
 
 	createScene() {
+
 		this.scene = new THREE.Scene();
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 		this.renderer.setSize(this.width, this.height);
@@ -75,6 +80,7 @@ export default class App {
 		// might be a render bottleneck
 		this.scene.fog = new THREE.FogExp2("#36454F", 0.01);
 	}
+
 
 	createCamera() {
 		this.camera = new THREE.PerspectiveCamera(
@@ -230,18 +236,6 @@ export default class App {
 		this.scene.add(plane);
 	}
 
-	addPointLight(params) {
-		const pointLight = new THREE.PointLight(params.color, params.intensity);
-
-		pointLight.position.set(
-			params.position.x,
-			params.position.y,
-			params.position.z
-		);
-
-		this.scene.add(pointLight);
-	}
-
 	getRandomBuiding() {
 		return this.models[
 			Math.floor(Math.random() * Math.floor(this.models.length))
@@ -348,6 +342,7 @@ export default class App {
 	}
 
 	animate() {
+
 		this.controls.update();
 
 		this.renderer.render(this.scene, this.camera);
