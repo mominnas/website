@@ -16,7 +16,7 @@ export default class App {
 		this.bgColor = window.getComputedStyle(document.body, null).getPropertyValue("background-color");
 		
 		//this.gridSize = 30;
-		this.gridSize = 40;
+		this.gridSize = 45;
 
 		// List of buildings in the scene
 		this.buildings = [];
@@ -46,17 +46,13 @@ export default class App {
 		this.animate();
 
 		// Add a point light to illuminate the buildings
-		const pointLightColor = "#7393B3";
-		const pointLightIntensity = 15;
+		const pointLightColor = "#05f7ff";
+		const pointLightIntensity = 7;
 		const pointLight = new THREE.PointLight(pointLightColor, pointLightIntensity);
-		pointLight.position.set(80, 110, -80);
+		pointLight.position.set(50, 80, -50);
 		this.scene.add(pointLight);
 
-
-		const helperSize = 5;
-		const pLightHelper = new THREE.PointLightHelper(pointLight, helperSize);
-		this.scene.add(pLightHelper);
-
+		//this.addAmbientLight();
 
 	}
 
@@ -67,8 +63,6 @@ export default class App {
 		this.renderer.setSize(this.width, this.height);
 
 		this.renderer.shadowMap.enabled = true;
-		//this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-		//this.renderer.shadowMap.type = THREE.PCFShadowMap;
 		// Variance Shadow Map for the building models, *might impact performance*
 		this.renderer.shadowMap.type = THREE.VSMShadowMap;
 
@@ -105,7 +99,7 @@ export default class App {
 	}
 
 	addSpotLight() {
-		const light = { color: "#ff0000", x: 641, y: -462, z: 509 };
+		const light = { color: "#05f7ff", x: 641, y: -462, z: 509 };
 		const spotLight = new THREE.SpotLight(light.color, 1);
 
 		spotLight.position.set(light.x, light.y, light.z);
@@ -115,10 +109,10 @@ export default class App {
 	}
 
 	addAmbientLight() {
-		const light = { color: "#a00a0a" };
-		const ambientLight = new THREE.AmbientLight(light.color);
-
+		
+		const ambientLight = new THREE.AmbientLight("#000000");
 		this.scene.add(ambientLight);
+
 	}
 
 	addBackgroundShape() {
@@ -305,7 +299,7 @@ export default class App {
 
 		// Size of the box of each buildings
 		//const modelSize = 3;
-		const modelSize = 5;
+		const modelSize = 3;
 
 		const meshParams = {
 			color: "#000",
