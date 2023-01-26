@@ -16,7 +16,7 @@ export default class App {
 		this.bgColor = window.getComputedStyle(document.body, null).getPropertyValue("background-color");
 		
 		//this.gridSize = 30;
-		this.gridSize = 45;
+		this.gridSize = 35;
 
 		// List of buildings in the scene
 		this.buildings = [];
@@ -47,9 +47,9 @@ export default class App {
 
 		// Add a point light to illuminate the buildings
 		const pointLightColor = "#05f7ff";
-		const pointLightIntensity = 7;
+		const pointLightIntensity = 10;
 		const pointLight = new THREE.PointLight(pointLightColor, pointLightIntensity);
-		pointLight.position.set(50, 80, -50);
+		pointLight.position.set(50, 180, -50);
 		this.scene.add(pointLight);
 
 		//this.addAmbientLight();
@@ -106,13 +106,6 @@ export default class App {
 		spotLight.castShadow = true;
 
 		this.scene.add(spotLight);
-	}
-
-	addAmbientLight() {
-		
-		const ambientLight = new THREE.AmbientLight("#000000");
-		this.scene.add(ambientLight);
-
 	}
 
 	addBackgroundShape() {
@@ -305,7 +298,10 @@ export default class App {
 			color: "#000",
 			metalness: 0,
 			emissive: "#000",
-			roughness: 0.77,
+			//emissiveIntensity: 0.01,
+			roughness: 0.8,
+			//clearcoat: 1,
+			//clearcoatRoughness: 0.1,
 		};
 
 		const max = 0.009;
