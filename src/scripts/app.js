@@ -15,8 +15,9 @@ export default class App {
 		
 		this.bgColor = window.getComputedStyle(document.body, null).getPropertyValue("background-color");
 		
-		this.gridSize = 30;
-		
+		//this.gridSize = 30;
+		this.gridSize = 40;
+
 		// List of buildings in the scene
 		this.buildings = [];
 		
@@ -301,7 +302,7 @@ export default class App {
 	}
 
 	draw() {
-		const boxSize = 4;
+		const boxSize = 3;
 		const meshParams = {
 			color: "#000",
 			metalness: 0,
