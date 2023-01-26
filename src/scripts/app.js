@@ -39,7 +39,7 @@ export default class App {
 		
 		// Load models from private repository
 		this.loadModels(
-			"https://raw.githubusercontent.com/ca-john/ca-john.github.io/main/buildings_new.obj",
+			"https://raw.githubusercontent.com/ca-john/ca-john.github.io/main/homepage_buildings.obj",
 			this.onLoadModelsComplete.bind(this)
 		);
 		
@@ -302,7 +302,11 @@ export default class App {
 	}
 
 	draw() {
-		const boxSize = 3;
+
+		// Size of the box of each buildings
+		//const modelSize = 3;
+		const modelSize = 5;
+
 		const meshParams = {
 			color: "#000",
 			metalness: 0,
@@ -312,16 +316,18 @@ export default class App {
 
 		const max = 0.009;
 		const min = 0.001;
-		const material = new THREE.MeshPhysicalMaterial(meshParams);
+
+
+		const temp_material = new THREE.MeshPhysicalMaterial(meshParams);
 
 		for (let i = 0; i < this.gridSize; i++) {
 			for (let j = 0; j < this.gridSize; j++) {
 				const building = this.getRandomBuiding().clone();
 
-				building.material = material;
+				building.material = temp_material;
 				building.scale.y = Math.random() * (max - min + 0.01);
-				building.position.x = i * boxSize;
-				building.position.z = j * boxSize;
+				building.position.x = i * modelSize;
+				building.position.z = j * modelSize;
 
 				this.group.add(building);
 
