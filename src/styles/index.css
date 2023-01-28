@@ -48,7 +48,7 @@ a:hover {
 }
 
 h1 {
-	font-size: 2em;
+	font-size: 3em;
 	margin: 0.67em 0;
 }
 
@@ -346,123 +346,20 @@ a:focus {
 }
 
 .content__title {
-	line-height: 0.9;
-	font-weight: 400;
+	line-height: 1;
+	font-weight: 500;
 }
 
 .content__title-inner {
 	display: block;
-	font-size: 5.5vw;
+	font-size: 5vw;
 	color: var(--color-text-alt);
-	-webkit-animation: glitch-anim-text 3s linear infinite;
-	animation: glitch-anim-text 3s linear infinite;
 }
 
-@-webkit-keyframes glitch-anim-text {
-	0% {
-		-webkit-transform: translate3d(-10px, 0, 0) scale3d(-1, -1, 1);
-		transform: translate3d(-10px, 0, 0) scale3d(-1, -1, 1);
-		-webkit-clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
-		clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
-	}
-	2% {
-		-webkit-clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
-		clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
-	}
-	4% {
-		-webkit-clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
-		clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
-	}
-	5% {
-		-webkit-clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
-		clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
-	}
-	6% {
-		-webkit-clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
-		clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
-	}
-	7% {
-		-webkit-clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
-		clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
-	}
-	8% {
-		color: var(--color-text-alt);
-		-webkit-clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
-		clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
-	}
-	9% {
-		color: #fff;
-		-webkit-clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
-		clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
-	}
-	9.9% {
-		color: var(--color-text-alt);
-		-webkit-transform: translate3d(-10px, 0, 0) scale3d(-1, -1, 1);
-		transform: translate3d(-10px, 0, 0) scale3d(-1, -1, 1);
-	}
-	10%,
-	100% {
-		-webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-		transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-		-webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-		clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-	}
-}
-
-@keyframes glitch-anim-text {
-	0% {
-		-webkit-transform: translate3d(-10px, 0, 0) scale3d(-1, -1, 1);
-		transform: translate3d(-10px, 0, 0) scale3d(-1, -1, 1);
-		-webkit-clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
-		clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
-	}
-	2% {
-		-webkit-clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
-		clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
-	}
-	4% {
-		-webkit-clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
-		clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
-	}
-	5% {
-		-webkit-clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
-		clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
-	}
-	6% {
-		-webkit-clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
-		clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
-	}
-	7% {
-		-webkit-clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
-		clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
-	}
-	8% {
-		color: var(--color-text-alt);
-		-webkit-clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
-		clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
-	}
-	9% {
-		color: #fff;
-		-webkit-clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
-		clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
-	}
-	9.9% {
-		color: var(--color-text-alt);
-		-webkit-transform: translate3d(-10px, 0, 0) scale3d(-1, -1, 1);
-		transform: translate3d(-10px, 0, 0) scale3d(-1, -1, 1);
-	}
-	10%,
-	100% {
-		-webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-		transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-		-webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-		clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-	}
-}
 .content__title-sub {
 	display: block;
 	text-align: right;
-	font-size: 3vw;
+	font-size: 2vw;
 	margin-right: 0.25rem;
 }
 
@@ -486,7 +383,7 @@ a:focus {
 		pointer-events: none;
 		grid-template-columns: 40% 20% 40%;
 		grid-template-rows: auto auto auto;
-		grid-template-areas: "title ... links" "... ... ..." "credits scroll demos";
+		grid-template-areas: "title ... links" "... ... ..." "... scroll ...";
 	}
 
 	.frame__scroll {
@@ -510,17 +407,6 @@ a:focus {
 		opacity: 0.5;
 	}
 
-	.frame__credits {
-		grid-area: credits;
-		justify-self: start;
-		margin: 0;
-	}
-
-	.frame__demos {
-		margin: 0;
-		grid-area: demos;
-		justify-self: end;
-	}
 
 	.frame__links {
 		grid-area: links;

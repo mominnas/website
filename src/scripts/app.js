@@ -4,6 +4,8 @@ import OBJLoader from "./three.r110.objloader.js";
 import OrbitControls from "./three.r110.orbitcontrols.js";
 import "styles/index.css";
 
+//import TweenMax from "./gsap-core.js";
+
 THREE = window.THREE;
 THREE.OrbitControls = OrbitControls;
 THREE.OBJLoader = OBJLoader;
