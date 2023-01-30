@@ -367,6 +367,14 @@ a:focus {
 	font-size: 2rem;
 }
 
+@media screen and (min-width: 600px) {
+	div.frame__scroll {
+		display: none;
+	}
+}
+
+
+
 @media screen and (min-width: 53em) {
 	.frame {
 		position: fixed;
