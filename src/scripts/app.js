@@ -22,13 +22,6 @@ export default class App {
 
 		// List of buildings in the scene
 		this.buildings = [];
-		
-		// this.fogConfig = {
-		// 	color: '#36454F',
-		// 	//color: '#353c3c',
-		// 	near: 5,
-		// 	far: 220
-		// };
 
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
@@ -55,6 +48,10 @@ export default class App {
 		this.scene.add(pointLight);
 
 		//this.addAmbientLight();
+
+		//document.addEventListener('scroll', () => { arrows.classList.add("hiddenByScroll")});
+
+
 
 	}
 
@@ -339,6 +336,14 @@ export default class App {
 		this.camera.updateProjectionMatrix();
 		this.renderer.setSize(this.width, this.height);
 	}
+
+
+	onResumeClick() {
+
+
+
+	}
+
 
 	animate() {
 
