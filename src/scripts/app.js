@@ -12,11 +12,12 @@ THREE.OBJLoader = OBJLoader;
 
 export default class App {
 	init() {
-		
 		this.group = new THREE.Object3D();
-		
-		this.bgColor = window.getComputedStyle(document.body, null).getPropertyValue("background-color");
-		
+
+		this.bgColor = window
+			.getComputedStyle(document.body, null)
+			.getPropertyValue("background-color");
+
 		//this.gridSize = 30;
 		this.gridSize = 35;
 
@@ -31,33 +32,36 @@ export default class App {
 		this.addCameraControls();
 		this.addFloor();
 		this.addBackgroundShape();
-		
+
 		// Load models from private repository
 		this.loadModels(
 			"https://raw.githubusercontent.com/ca-john/ca-john.github.io/main/homepage_buildings.obj",
 			this.onLoadModelsComplete.bind(this)
 		);
-		
+
 		this.animate();
 
 		// Add a point light to illuminate the buildings
 		const pointLightColor = "#05f7ff";
 		const pointLightIntensity = 10;
-		const pointLight = new THREE.PointLight(pointLightColor, pointLightIntensity);
+		const pointLight = new THREE.PointLight(
+			pointLightColor,
+			pointLightIntensity
+		);
 		pointLight.position.set(50, 180, -50);
 		this.scene.add(pointLight);
 
 		//this.addAmbientLight();
 
 		//document.addEventListener('scroll', () => { arrows.classList.add("hiddenByScroll")});
-		
-
 	}
 
 	createScene() {
-
 		this.scene = new THREE.Scene();
-		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+		this.renderer = new THREE.WebGLRenderer({
+			antialias: true,
+			alpha: true,
+		});
 		this.renderer.setSize(this.width, this.height);
 
 		this.renderer.shadowMap.enabled = true;
@@ -73,7 +77,6 @@ export default class App {
 		// might be a render bottleneck
 		this.scene.fog = new THREE.FogExp2("#36454F", 0.01);
 	}
-
 
 	createCamera() {
 		this.camera = new THREE.PerspectiveCamera(
@@ -158,7 +161,8 @@ export default class App {
 
 		window.addEventListener("mousemove", (ev) => {
 			const docScrolls = {
-				left: this.tiltFx.body.scrollLeft + this.tiltFx.docEl.scrollLeft,
+				left:
+					this.tiltFx.body.scrollLeft + this.tiltFx.docEl.scrollLeft,
 				top: this.tiltFx.body.scrollTop + this.tiltFx.docEl.scrollTop,
 			};
 			const mp = this.tiltFx.getMousePos(ev, docScrolls);
@@ -200,7 +204,11 @@ export default class App {
 			this.tiltFx.lineEq(0, 158, this.docheight, 0, newScrollingPos),
 			0.05
 		);
-		this.camera.position.set(this.lastMouseX, this.lastMouseY, this.lastScale);
+		this.camera.position.set(
+			this.lastMouseX,
+			this.lastMouseY,
+			this.lastScale
+		);
 		this.requestId = requestAnimationFrame(() => this.tilt());
 	}
 
@@ -287,7 +295,6 @@ export default class App {
 	}
 
 	draw() {
-
 		// Size of the box of each buildings
 		//const modelSize = 3;
 		const modelSize = 3;
@@ -304,7 +311,6 @@ export default class App {
 
 		const max = 0.009;
 		const min = 0.001;
-
 
 		const temp_material = new THREE.MeshPhysicalMaterial(meshParams);
 
@@ -336,16 +342,9 @@ export default class App {
 		this.renderer.setSize(this.width, this.height);
 	}
 
-
-	onResumeClick() {
-
-
-
-	}
-
+	onResumeClick() {}
 
 	animate() {
-
 		this.controls.update();
 
 		this.renderer.render(this.scene, this.camera);

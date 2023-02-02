@@ -1,3 +1,7 @@
+@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
+
+/* Import social media icons from fontawesome for the links */
+
 article,
 aside,
 details,
@@ -331,8 +335,9 @@ a:focus {
 .content {
 	display: flex;
 	flex-direction: column;
-	width: 100vw;
-	height: calc(100vh - 13rem);
+	/* width:100vw; */
+	width: auto;
+	height: calc(100vh - 15rem);
 	position: relative;
 	justify-content: flex-start;
 	align-items: center;
@@ -342,12 +347,16 @@ a:focus {
 }
 
 .content--final {
+	display: flex;
 	margin-top: 100vh;
+	justify-content: center;
+	align-items: left;
+	flex-direction: row;
 }
 
 .content__title {
 	line-height: 1;
-	font-weight: 500;
+	font-weight: 300;
 }
 
 .content__title-inner {
@@ -359,7 +368,7 @@ a:focus {
 .content__title-sub {
 	display: block;
 	text-align: right;
-	font-size: 2vw;
+	font-size: 1.5vw;
 	margin-right: 0.25rem;
 }
 
@@ -367,11 +376,17 @@ a:focus {
 	font-size: 2rem;
 }
 
-@media screen and (max-width: 53em) {
+.sub_text {
+	font-size: 1rem;
+}
+
+
+
+/* @media screen and (max-width: 53em) {
 	div.frame__scroll {
 		display: none;
 	}
-}
+} */
 
 @media screen and (min-width: 35em) {
 	.frame {
@@ -389,7 +404,7 @@ a:focus {
 		pointer-events: none;
 		grid-template-columns: 40% 20% 40%;
 		grid-template-rows: auto auto auto;
-		grid-template-areas: "title projects links" ". . ." ". scroll .";
+		grid-template-areas: "title ... links" "... .... ..." "... ... ...";
 	}
 
 	/* .frame__scroll {
@@ -428,98 +443,77 @@ a:focus {
 		height: 100vh;
 		justify-content: center;
 	}
-
-
-	.arrow {
-		position: absolute;
-		width: 0;
-		height: 30px;
-		border: 2px solid;
-		border-radius: 2px;
-		animation: jumpInfinite 1.5s infinite;
-		grid-area: scroll;
-		justify-self: center;
-	}
-	
-	.arrow:after {
-		content: " ";
-		position: absolute;
-		top: 12px;
-		left: -10px;
-		width: 16px;
-		height: 16px;
-		border-bottom: 4px solid;
-		border-right: 4px solid;
-		border-radius: 4px;
-		transform: rotateZ(45deg);
-	}
-	
-	@keyframes jumpInfinite {
-		0% {
-		  margin-top: 0;
-		}
-		50% {
-		  margin-top: 20px;
-		}
-		100% {
-		  margin-top: 0;
-		}
-	}
-
-	.arrows {
-		width: 60px;
-		height: 72px;
-		position: absolute;
-		left: 50%;
-		margin-left: -30px;
-		bottom: 20px;
-	  }
-	  
-	  .arrows path {
-		stroke: #2994D1;
-		fill: transparent;
-		stroke-width: 1px;  
-		animation: arrow 2s infinite;
-		-webkit-animation: arrow 2s infinite; 
-	  }
-	  
-	  .arrows.hiddenByScroll{
-		opacity: 0;
-  		pointer-events: none;
-	  }
-
-	  @keyframes arrow
-	  {
-	  0% {opacity:0}
-	  40% {opacity:1}
-	  80% {opacity:0}
-	  100% {opacity:0}
-	  }
-	  
-	  @-webkit-keyframes arrow /*Safari and Chrome*/
-	  {
-	  0% {opacity:0}
-	  40% {opacity:1}
-	  80% {opacity:0}
-	  100% {opacity:0}
-	  }
-	  
-	  .arrows path.a1 {
-		animation-delay:-1s;
-		-webkit-animation-delay:-1s; /* Safari 和 Chrome */
-	  }
-	  
-	  .arrows path.a2 {
-		animation-delay:-0.5s;
-		-webkit-animation-delay:-0.5s; /* Safari 和 Chrome */
-	  }
-	  
-	  .arrows path.a3 { 
-		animation-delay:0s;
-		-webkit-animation-delay:0s; /* Safari 和 Chrome */
-	  }
-
-
 }
 
 
+
+.arrows {
+	width: 60px;
+	height: 72px;
+	position: absolute;
+	left: 50%;
+	margin-left: -30px;
+	bottom: 20px;
+}
+
+.arrows path {
+	stroke: #000000;
+	fill: transparent;
+	stroke-width: 2px;
+	animation: arrow 1.75s infinite;
+	-webkit-animation: arrow 1.75s infinite;
+}
+
+
+
+
+
+/* .arrows.hiddenByScroll{
+	opacity: 0;
+	  pointer-events: none;
+  } */
+
+@keyframes arrow {
+	0% {
+		opacity: 0;
+	}
+	40% {
+		opacity: 1;
+	}
+	80% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@-webkit-keyframes arrow {
+	0% {
+		opacity: 0;
+	}
+	40% {
+		opacity: 1;
+	}
+	80% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.arrows path.first {
+	animation-delay: -1s;
+	-webkit-animation-delay: -1s;
+}
+
+.arrows path.second {
+	animation-delay: -0.5s;
+	-webkit-animation-delay: -0.5s;
+}
+
+.arrows path.third {
+	animation-delay: 0s;
+	-webkit-animation-delay: 0s;
+}
