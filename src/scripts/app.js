@@ -50,8 +50,7 @@ export default class App {
 		//this.addAmbientLight();
 
 		//document.addEventListener('scroll', () => { arrows.classList.add("hiddenByScroll")});
-		let arrow = document.getElementById("arrows");
-		arrow.style.opacity = 0;
+		
 
 	}
 
