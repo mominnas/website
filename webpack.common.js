@@ -7,12 +7,12 @@ module.exports = {
 		app: "./src/index.js",
 	},
 	output: {
+		// Cache busting using webpack's filename hashing
 		filename: "[name].[hash].js",
 		path: path.resolve(__dirname, "public"),
 	},
 	resolve: {
 		alias: {
-			//styles: path.resolve(__dirname, './src/styles/'),
 			styles: path.resolve(__dirname, "./src/"),
 		},
 	},

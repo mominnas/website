@@ -35,10 +35,6 @@ html {
 	-webkit-text-size-adjust: 100%;
 }
 
-body {
-	margin: 0;
-}
-
 a:focus {
 	outline: thin dotted;
 }
@@ -221,6 +217,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	height: 300vh;
+	margin: 0;
 }
 
 .loader {
