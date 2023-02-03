@@ -317,21 +317,13 @@ a:focus {
 	margin-right: 1rem;
 }
 
-.frame__demos {
-	margin: 1rem 0;
-}
-
-.frame__demo--current,
-.frame__demo--current:hover {
-	color: var(--color-text);
-}
 
 .content {
 	display: flex;
 	flex-direction: column;
 	/* width:100vw; */
 	width: auto;
-	height: calc(100vh - 15rem);
+	height: calc(100vh - 13rem);
 	position: relative;
 	justify-content: flex-start;
 	align-items: center;
@@ -345,7 +337,7 @@ a:focus {
 	margin-top: 100vh;
 	justify-content: center;
 	align-items: left;
-	flex-direction: row;
+	flex-direction: column;
 }
 
 .content__title {
@@ -392,11 +384,11 @@ a:focus {
 		width: 100%;
 		max-width: none;
 		height: 100vh;
-		padding: 3rem;
+		padding: 4rem;
 		pointer-events: none;
 		grid-template-columns: 40% 20% 40%;
 		grid-template-rows: auto auto auto;
-		grid-template-areas: "title ... links" "... .... ..." "... ... ...";
+		grid-template-areas: "title ... links" "... scroll ..." "... ... ...";
 	}
 
 	/* .frame__scroll {
@@ -438,6 +430,7 @@ a:focus {
 }
 
 .arrows {
+	grid-area: scroll;
 	width: 60px;
 	height: 72px;
 	position: absolute;
