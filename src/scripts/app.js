@@ -129,7 +129,8 @@ export default class App {
 			getMousePos: (e, docScrolls) => {
 				let posx = 0;
 				let posy = 0;
-				if (!e) {
+				// Generate an event if not already done
+                if (!e) {
 					e = window.event;
 				}
 				if (e.pageX || e.pageY) {

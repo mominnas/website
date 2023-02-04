@@ -335,15 +335,18 @@ a:focus {
 .content--final {
 	display: flex;
 	margin-top: 100vh;
-	justify-content: center;
-	align-items: left;
+	justify-content: flex-start;
+	align-items: center;
 	flex-direction: column;
+
 }
 
 .content__title {
 	line-height: 1;
 	font-weight: 300;
 }
+
+
 
 .content__title-inner {
 	display: block;
@@ -358,12 +361,22 @@ a:focus {
 	margin-right: 0.25rem;
 }
 
+.occupation_text{
+    line-height: 2;
+    font-weight: 300;
+}
+
 .content__text {
+
+    display: block;
 	font-size: 2rem;
+    text-align: left;
 }
 
 .sub_text {
-	font-size: 1rem;
+    display: block;
+    text-align: left;
+	font-size: 1.5rem;
 }
 
 /* @media screen and (max-width: 53em) {
@@ -430,7 +443,7 @@ a:focus {
 }
 
 .arrows {
-	grid-area: scroll;
+	/* grid-area: scroll; */
 	width: 60px;
 	height: 72px;
 	position: absolute;
