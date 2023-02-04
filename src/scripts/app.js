@@ -1,10 +1,10 @@
 import THREE from "./three.r110.js";
-import TweenMax from "./tweenmax.1.20.3.js";
 import OBJLoader from "./three.r110.objloader.js";
 import OrbitControls from "./three.r110.orbitcontrols.js";
 import "../styles.css";
 
-//import TweenMax from "./gsap-core.js";
+import TweenMax from "./gsap-core.js";
+import Quint from "./gsap-core"
 
 THREE = window.THREE;
 THREE.OrbitControls = OrbitControls;
