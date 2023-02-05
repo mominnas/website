@@ -9,14 +9,14 @@ module.exports = {
         children: true
     },
     optimization: {
-        minimize: false
+        minimize: true
     },
 	entry: {
 		app: "./src/index.js",
 	},
 	output: {
 		// Cache busting using webpack's filename hashing
-//		filename: "[name].[hash].js",
+		// filename: "[name].[hash].js",
         // Update to new webpack hashing
         filename: "[name].[contenthash].js",
 		path: path.resolve(__dirname, "public"),
@@ -36,7 +36,6 @@ module.exports = {
 				},
 			},
 			{
-				//test: require.resolve("./src/scripts/three.r110.js"),
                 test: require.resolve("./src/scripts/three.js"),
 				use: [
 					{

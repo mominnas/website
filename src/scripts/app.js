@@ -1,5 +1,5 @@
 //import THREE from "./three.r110.js";
-import {THREE} from "./three";
+import * as THREE from "./three";
 //import OBJLoader from "./three.r110.objloader.js";
 
 import {OBJLoader} from "./OBJloader";
@@ -21,7 +21,7 @@ export default class App {
 			.getComputedStyle(document.body, null)
 			.getPropertyValue("background-color");
 
-		//this.gridSize = 30;
+
 		this.gridSize = 35;
 
 		// List of buildings in the scene
