@@ -6,7 +6,7 @@ import {
 	TOUCH,
 	Vector2,
 	Vector3
-} from "./three.r110";
+} from "./three";
 
 // This set of controls performs orbiting, dollying (zooming), and panning.
 // Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).
@@ -154,8 +154,8 @@ class OrbitControls extends EventDispatcher {
 
 			// so camera.up is the orbit axis
 			const quat = new Quaternion().setFromUnitVectors( object.up, new Vector3( 0, 1, 0 ) );
-			//const quatInverse = quat.clone().invert();
-            const quatInverse = quat.clone().inverse();
+			const quatInverse = quat.clone().invert();
+            //const quatInverse = quat.clone().inverse();
 			const lastPosition = new Vector3();
 			const lastQuaternion = new Quaternion();
 
