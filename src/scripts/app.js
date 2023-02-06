@@ -1,15 +1,19 @@
 //import THREE from "./three.r110.js";
-import * as THREE from "./three";
+//import THREE from "three";
+import * as THREE from 'three';
 //import OBJLoader from "./three.r110.objloader.js";
 
-import {OBJLoader} from "./OBJloader";
-
+import {OBJLoader} from "./OBJloader.js";
+//import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import "../styles.css";
-import {OrbitControls} from "./OrbitControls";
-import {TweenMax, Quint} from "./gsap-core.js";
+//import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import {OrbitControls} from "./OrbitControls.js";
+//import {TweenMax, Quint} from "gsap";
+import { gsap, Quint } from "gsap";
+//import {TweenMax, Quint} from "./gsap-core.js";
 
 
-THREE = window.THREE;
+//THREE = window.THREE;
 THREE.OrbitControls = OrbitControls;
 THREE.OBJLoader = OBJLoader;
 
@@ -270,11 +274,17 @@ export default class App {
 		this.sortBuildingsByDistance();
 
 		this.buildings.forEach((building, index) => {
-			TweenMax.to(building.position, 0.6 + index / 4000, {
+			gsap.to(building.position, {
+				duration: 0.6 + index / 4000,
 				y: 1,
 				ease: Quint.easeOut,
 				delay: index / 4000,
 			});
+			// TweenMax.to(building.position, 0.6 + index / 4000, {
+			// 	y: 1,
+			// 	ease: Quint.easeOut,
+			// 	delay: index / 4000,
+			// });
 		});
 	}
 
@@ -299,7 +309,7 @@ export default class App {
 	}
 
 	draw() {
-		// Size of the box of each buildings
+		// Size of the box of each building
 		//const modelSize = 3;
 		const modelSize = 3;
 
