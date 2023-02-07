@@ -22,6 +22,9 @@ export default class App {
 	backgroundColor: string;
 	sizeSquared: number;
 	models: any[];
+	windowX: number;
+	windowY: number;
+	scene: any;
 	init() {
 		this.group = new THREE.Object3D();
 
@@ -35,16 +38,16 @@ export default class App {
 		// List of buildings in the scene
 		this.models = [];
 
-		this.width = window.innerWidth;
-		this.height = window.innerHeight;
+		this.windowX = window.innerWidth;
+		this.windowY = window.innerHeight;
 
-		this.createScene();
-		this.createCamera();
-		this.addCameraControls();
-		this.addFloor();
-		this.addBackgroundShape();
+		this.generateScene();
+		this.generateCamera();
+		this.generateControls();
+		this.addPlane();
+		this.addBackground();
 
-		// Load models from private repository
+		// Load models from repository
 		this.loadModels(
 			"https://raw.githubusercontent.com/ca-john/ca-john.github.io/main/homepage_buildings.obj",
 			this.onLoadModelsComplete.bind(this)
@@ -67,13 +70,13 @@ export default class App {
 		//document.addEventListener('scroll', () => { arrows.classList.add("hiddenByScroll")});
 	}
 
-	createScene() {
+	generateScene() {
 		this.scene = new THREE.Scene();
 		this.renderer = new THREE.WebGLRenderer({
 			antialias: true,
 			alpha: true,
 		});
-		this.renderer.setSize(this.width, this.height);
+		this.renderer.setSize(this.windowX, this.windowY);
 
 		this.renderer.shadowMap.enabled = true;
 		// Variance Shadow Map for the building models, *might impact performance*
@@ -89,10 +92,10 @@ export default class App {
 		this.scene.fog = new THREE.FogExp2("#36454F", 0.01);
 	}
 
-	createCamera() {
+	generateCamera() {
 		this.camera = new THREE.PerspectiveCamera(
 			20,
-			this.width / this.height,
+			this.windowX / this.windowY,
 			1,
 			1000
 		);
@@ -101,7 +104,7 @@ export default class App {
 		this.scene.add(this.camera);
 	}
 
-	addCameraControls() {
+	generateControls() {
 		this.controls = new OrbitControls(
 			this.camera,
 			this.renderer.domElement
@@ -120,7 +123,7 @@ export default class App {
 		this.scene.add(spotLight);
 	}
 
-	addBackgroundShape() {
+	addBackground() {
 		const planeGeometry = new THREE.PlaneGeometry(400, 100);
 		const planeMaterial = new THREE.MeshPhysicalMaterial({ color: "#fff" });
 		this.backgroundShape = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -202,7 +205,7 @@ export default class App {
 	tilt() {
 		this.lastMouseX = this.tiltFx.lerp(
 			this.lastMouseX,
-			this.tiltFx.lineEq(6, 0, this.width, 0, this.mouseX),
+			this.tiltFx.lineEq(6, 0, this.windowX, 0, this.mouseX),
 			0.05
 		);
 		const newScrollingPos = window.pageYOffset;
@@ -224,7 +227,7 @@ export default class App {
 		this.requestId = requestAnimationFrame(() => this.tilt());
 	}
 
-	addFloor() {
+	addPlane() {
 		const floor = { color: "#000000" };
 		const planeGeometry = new THREE.PlaneGeometry(200, 200);
 		const planeMaterial = new THREE.MeshStandardMaterial({
@@ -352,12 +355,12 @@ export default class App {
 	}
 
 	onResize() {
-		this.width = window.innerWidth;
-		this.height = window.innerHeight;
+		this.windowX = window.innerWidth;
+		this.windowY = window.innerHeight;
 
-		this.camera.aspect = this.width / this.height;
+		this.camera.aspect = this.windowX / this.windowY;
 		this.camera.updateProjectionMatrix();
-		this.renderer.setSize(this.width, this.height);
+		this.renderer.setSize(this.windowX, this.windowY);
 	}
 
 	onResumeClick() {}

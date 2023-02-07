@@ -4,12 +4,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-	
-    // Get error codes
-    // stats: {
-    //     errorDetails: true,
-    //     children: true
-    // }, 
 
 	// optimization: {
 	// 	splitChunks: {
