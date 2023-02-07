@@ -25,6 +25,14 @@ export default class App {
 	windowX: number;
 	windowY: number;
 	scene: any;
+	renderer: THREE.WebGLRenderer;
+	camera: THREE.PerspectiveCamera;
+	controls: OrbitControls;
+	backgroundPlane: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshPhysicalMaterial>;
+	currMouseX: number;
+	oldMouseX: number;
+	oldMouseY: number;
+	lastScale: number;
 	init() {
 		this.group = new THREE.Object3D();
 
@@ -82,77 +90,91 @@ export default class App {
 		// Variance Shadow Map for the building models, *might impact performance*
 		this.renderer.shadowMap.type = THREE.VSMShadowMap;
 
+		// Add the renderer to the DOM
 		document.body
 			.querySelector(".canvas-wrapper")
 			.appendChild(this.renderer.domElement);
 
-		//this.scene.fog = new THREE.Fog(this.fogConfig.color, this.fogConfig.near, this.fogConfig.far);
 		// Exponential fog that increases exponentially as the distance from the camera increases
 		// might be a render bottleneck
 		this.scene.fog = new THREE.FogExp2("#36454F", 0.01);
 	}
 
 	generateCamera() {
+		// Perspective camera with a 20 degree field of view, a 1:1 aspect ratio, 
+		// and a near and far clipping plane of 1 and 2000 respectively
+
 		this.camera = new THREE.PerspectiveCamera(
 			20,
 			this.windowX / this.windowY,
 			1,
-			1000
+			2000
 		);
-		this.camera.position.set(3, 50, 155);
 
+		// Set the camera position to be 150 units away from the center of the scene
+		this.camera.position.set(0, 50, 150);
+
+		// Add the camera to the scene
 		this.scene.add(this.camera);
 	}
 
 	generateControls() {
+
+		// Orbit controls for the camera to allow for mouse and touch interaction
 		this.controls = new OrbitControls(
 			this.camera,
 			this.renderer.domElement
 		);
 
+		// Enable damping so that the camera doesn't move too fast
+		this.controls.dampingFactor = 0.03;
+		
+		// Disable camera controls when the user is scrolling
 		this.controls.enabled = false;
 	}
 
 	addSpotLight() {
+
+		// Add a spotlight to the scene to illuminate the buildings
 		const light = { color: "#05f7ff", x: 641, y: -462, z: 509 };
 		const spotLight = new THREE.SpotLight(light.color, 1);
 
 		spotLight.position.set(light.x, light.y, light.z);
 		spotLight.castShadow = true;
-
+		
 		this.scene.add(spotLight);
 	}
 
 	addBackground() {
-		const planeGeometry = new THREE.PlaneGeometry(400, 100);
-		const planeMaterial = new THREE.MeshPhysicalMaterial({ color: "#fff" });
-		this.backgroundShape = new THREE.Mesh(planeGeometry, planeMaterial);
+		const geometry = new THREE.PlaneGeometry(400, 100);
+		const material = new THREE.MeshPhysicalMaterial({ color: "#fff" });
+		this.backgroundPlane = new THREE.Mesh(geometry, material);
 
-		this.backgroundShape.position.y = 10;
-		this.backgroundShape.position.z = -150;
+		this.backgroundPlane.position.y = 10;
+		this.backgroundPlane.position.z = -150;
 
-		this.scene.add(this.backgroundShape);
+		this.scene.add(this.backgroundPlane);
 
-		this.mouseX = 3;
-		this.lastMouseX = 3;
-		this.lastMouseY = 65;
+		this.currMouseX = 3;
+		this.oldMouseX = 3;
+		this.oldMouseY = 65;
 		this.lastScale = 155;
 		this.tiltFx = {
 			body: document.body,
 			docEl: document.documentElement,
-			getMousePos: (e, docScrolls) => {
+			getMousePos: (event, scrollFactor: any) => {
 				let posx = 0;
 				let posy = 0;
 				// Generate an event if not already done
-                if (!e) {
-					e = window.event;
+				if (!event) {
+					event = window.event;
 				}
-				if (e.pageX || e.pageY) {
-					posx = e.pageX;
-					posy = e.pageY;
-				} else if (e.clientX || e.clientY) {
-					posx = e.clientX + docScrolls.left;
-					posy = e.clientY + docScrolls.top;
+				if (event.pageX || event.pageY) {
+					posx = event.pageX;
+					posy = event.pageY;
+				} else if (event.clientX || event.clientY) {
+					posx = event.clientX + scrollFactor.left;
+					posy = event.clientY + scrollFactor.top;
 				}
 				return { x: posx, y: posy };
 			},
@@ -181,19 +203,19 @@ export default class App {
 				top: this.tiltFx.body.scrollTop + this.tiltFx.docEl.scrollTop,
 			};
 			const mp = this.tiltFx.getMousePos(ev, docScrolls);
-			this.mouseX = mp.x - docScrolls.left;
+			this.currMouseX = mp.x - docScrolls.left;
 		});
 
 		window.addEventListener(
 			"resize",
 			() =>
-				(this.docheight = Math.max(
-					this.tiltFx.body.scrollHeight,
-					this.tiltFx.body.offsetHeight,
-					this.tiltFx.docEl.clientHeight,
-					this.tiltFx.docEl.scrollHeight,
-					this.tiltFx.docEl.offsetHeight
-				))
+			(this.docheight = Math.max(
+				this.tiltFx.body.scrollHeight,
+				this.tiltFx.body.offsetHeight,
+				this.tiltFx.docEl.clientHeight,
+				this.tiltFx.docEl.scrollHeight,
+				this.tiltFx.docEl.offsetHeight
+			))
 		);
 
 		window.onbeforeunload = () => {
@@ -203,14 +225,14 @@ export default class App {
 	}
 
 	tilt() {
-		this.lastMouseX = this.tiltFx.lerp(
-			this.lastMouseX,
-			this.tiltFx.lineEq(6, 0, this.windowX, 0, this.mouseX),
+		this.oldMouseX = this.tiltFx.lerp(
+			this.oldMouseX,
+			this.tiltFx.lineEq(6, 0, this.windowX, 0, this.currMouseX),
 			0.05
 		);
 		const newScrollingPos = window.pageYOffset;
-		this.lastMouseY = this.tiltFx.lerp(
-			this.lastMouseY,
+		this.oldMouseY = this.tiltFx.lerp(
+			this.oldMouseY,
 			this.tiltFx.lineEq(0, 65, this.docheight, 0, newScrollingPos),
 			0.05
 		);
@@ -220,8 +242,8 @@ export default class App {
 			0.05
 		);
 		this.camera.position.set(
-			this.lastMouseX,
-			this.lastMouseY,
+			this.oldMouseX,
+			this.oldMouseY,
 			this.lastScale
 		);
 		this.requestId = requestAnimationFrame(() => this.tilt());
@@ -363,7 +385,7 @@ export default class App {
 		this.renderer.setSize(this.windowX, this.windowY);
 	}
 
-	onResumeClick() {}
+	onResumeClick() { }
 
 	animate() {
 		this.controls.update();
