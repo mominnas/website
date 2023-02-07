@@ -50,7 +50,9 @@ module.exports = merge(common, {
 		runtimeChunk: true,
 		
 		splitChunks: {
+
 			chunks: 'all',
+			
 		},
 
 		moduleIds: 'deterministic',

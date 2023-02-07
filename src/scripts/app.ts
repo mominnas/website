@@ -3,33 +3,37 @@
 import * as THREE from 'three';
 //import OBJLoader from "./three.r110.objloader.js";
 
-import {OBJLoader} from "./OBJloader.js";
-//import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+//import {OBJLoader} from "./OBJloader.js";
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import "../styles.css";
-//import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import {OrbitControls} from "./OrbitControls.js";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+//import {OrbitControls} from "./OrbitControls.js";
 //import {TweenMax, Quint} from "gsap";
 import { gsap, Quint } from "gsap";
 //import {TweenMax, Quint} from "./gsap-core.js";
 
 
 //THREE = window.THREE;
-THREE.OrbitControls = OrbitControls;
-THREE.OBJLoader = OBJLoader;
+//THREE.OrbitControls = OrbitControls;
+//THREE.OBJLoader = OBJLoader;
 
 export default class App {
+	group: THREE.Object3D<THREE.Event>;
+	backgroundColor: string;
+	sizeSquared: number;
+	models: any[];
 	init() {
 		this.group = new THREE.Object3D();
 
-		this.bgColor = window
+		this.backgroundColor = window
 			.getComputedStyle(document.body, null)
 			.getPropertyValue("background-color");
 
 
-		this.gridSize = 35;
+		this.sizeSquared = 35;
 
 		// List of buildings in the scene
-		this.buildings = [];
+		this.models = [];
 
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
@@ -98,7 +102,7 @@ export default class App {
 	}
 
 	addCameraControls() {
-		this.controls = new THREE.OrbitControls(
+		this.controls = new OrbitControls(
 			this.camera,
 			this.renderer.domElement
 		);
@@ -273,7 +277,7 @@ export default class App {
 	showBuildings() {
 		this.sortBuildingsByDistance();
 
-		this.buildings.forEach((building, index) => {
+		this.models.forEach((building, index) => {
 			gsap.to(building.position, {
 				duration: 0.6 + index / 4000,
 				y: 1,
@@ -289,7 +293,7 @@ export default class App {
 	}
 
 	sortBuildingsByDistance() {
-		this.buildings
+		this.models
 			.sort((a, b) => {
 				if (a.position.z > b.position.z) {
 					return 1;
@@ -303,7 +307,7 @@ export default class App {
 	}
 
 	loadModels(name, callback) {
-		const objLoader = new THREE.OBJLoader();
+		const objLoader = new OBJLoader();
 
 		objLoader.load(name, callback);
 	}
@@ -328,8 +332,8 @@ export default class App {
 
 		const temp_material = new THREE.MeshPhysicalMaterial(meshParams);
 
-		for (let i = 0; i < this.gridSize; i++) {
-			for (let j = 0; j < this.gridSize; j++) {
+		for (let i = 0; i < this.sizeSquared; i++) {
+			for (let j = 0; j < this.sizeSquared; j++) {
 				const building = this.getRandomBuiding().clone();
 
 				building.material = temp_material;
@@ -339,12 +343,12 @@ export default class App {
 
 				this.group.add(building);
 
-				this.buildings.push(building);
+				this.models.push(building);
 			}
 		}
 
 		this.scene.add(this.group);
-		this.group.position.set(-this.gridSize - 10, 1, -this.gridSize - 10);
+		this.group.position.set(-this.sizeSquared - 10, 1, -this.sizeSquared - 10);
 	}
 
 	onResize() {

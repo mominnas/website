@@ -4,17 +4,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-    // Get error codes to help with webpack 4 -> webpack 5 migration
+	
+    // Get error codes
     // stats: {
     //     errorDetails: true,
     //     children: true
-    // },
-
-	// optimization: {
-    //     minimize: true
-    // },
-
-    
+    // }, 
 
 	// optimization: {
 	// 	splitChunks: {
@@ -45,20 +40,13 @@ module.exports = {
 	},
 	
 	output: {
+
 		// Cache busting using webpack's filename hashing
-		// filename: "[name].[hash].js",
         // Update to new webpack hashing
         // filename: "[name].[contenthash].js",
 		filename: "[name].[chunkhash].js",
 		path: path.resolve(__dirname, "public"),
 	},
-
-
-
-
-
-
-
 	
 	
 
@@ -85,23 +73,8 @@ module.exports = {
 			// 	test: /\.js$/,
 			// 	exclude: /node_modules/,
 			// 	use: {
-			// 		// loader: 'babel-loader',
 			// 		loader: "swc-loader"
 			// 	}
-			
-			// },
-
-			{
-                test: require.resolve("./src/scripts/three.js"),
-				use: [
-					{
-						loader: "expose-loader",
-						options: {
-							exposes: "THREE",
-						},
-					},
-				],
-			},
 
 			{ test: /\.([cm]?ts|tsx)$/, loader: "ts-loader" }
 			//{ test: /\.([cm]?ts|tsx)$/, loader: "swc-loader" }
@@ -151,17 +124,7 @@ module.exports = {
 
     },
 	plugins: [
-//		new webpack.DefinePlugin({
-//			"process.env": {
-//				NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-//			},
-//		}),
-//        new webpack.DefinePlugin({
-//            "process.env": {
-//                // This has effect on the react lib size
-//                NODE_ENV: JSON.stringify("production"),
-//            },
-//        }),
+		
 		new HtmlWebpackPlugin({
 			filename: "index.html",
 			template: "src/index.html",
