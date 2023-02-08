@@ -18,7 +18,7 @@ import { gsap, Quint } from "gsap";
 //THREE.OBJLoader = OBJLoader;
 
 export default class App {
-	group: THREE.Object3D<THREE.Event>;
+	group: THREE.Object3D<THREE.Event> | undefined;
 	backgroundColor: string;
 	sizeSquared: number;
 	models: any[];
@@ -267,7 +267,7 @@ export default class App {
 		this.scene.add(plane);
 	}
 
-	getRandomBuiding() {
+	getModel() {
 		return this.models[
 			Math.floor(Math.random() * Math.floor(this.models.length))
 		];
@@ -359,16 +359,17 @@ export default class App {
 
 		for (let i = 0; i < this.sizeSquared; i++) {
 			for (let j = 0; j < this.sizeSquared; j++) {
-				const building = this.getRandomBuiding().clone();
 
-				building.material = temp_material;
-				building.scale.y = Math.random() * (max - min + 0.01);
-				building.position.x = i * modelSize;
-				building.position.z = j * modelSize;
+				const model = this.getModel().clone();
 
-				this.group.add(building);
+				model.material = temp_material;
+				model.scale.y = Math.random() * (max - min + 0.01);
+				model.position.x = i * modelSize;
+				model.position.z = j * modelSize;
 
-				this.models.push(building);
+				this.group.add(model);
+
+				this.models.push(model);
 			}
 		}
 
