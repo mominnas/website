@@ -76,6 +76,7 @@ export default class App {
 		//this.addAmbientLight();
 
 		//document.addEventListener('scroll', () => { arrows.classList.add("hiddenByScroll")});
+		
 	}
 
 	generateScene() {
@@ -288,32 +289,34 @@ export default class App {
 		this.draw();
 
 		setTimeout(() => {
-			this.removeLoader();
+			this.deleteLoadingIcon();
+			
 			this.showBuildings();
 		}, 500);
 
 		window.addEventListener("resize", this.onResize.bind(this));
 	}
 
-	removeLoader() {
-		document.querySelector(".loader").classList.add("loader--done");
+	deleteLoadingIcon() {
+		document.querySelector(".loadingIcon").classList.add("loadIconRemove");
+	}
+
+	deleteScrollIcon() {
+		document.querySelector(".arrows").classList.add("scroll_remove");
 	}
 
 	showBuildings() {
 		this.sortBuildingsByDistance();
 
 		this.models.forEach((building, index) => {
+			
 			gsap.to(building.position, {
 				duration: 0.6 + index / 4000,
 				y: 1,
 				ease: Quint.easeOut,
 				delay: index / 4000,
 			});
-			// TweenMax.to(building.position, 0.6 + index / 4000, {
-			// 	y: 1,
-			// 	ease: Quint.easeOut,
-			// 	delay: index / 4000,
-			// });
+
 		});
 	}
 
