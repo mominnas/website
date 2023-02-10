@@ -18,9 +18,9 @@ import { gsap, Quint } from "gsap";
 //THREE.OBJLoader = OBJLoader;
 
 export default class App {
-	group: THREE.Object3D<THREE.Event> | undefined;
-	backgroundColor: string;
-	sizeSquared: number;
+	group: THREE.Object3D<THREE.Event> = new THREE.Object3D();
+	backgroundColor: string = window.getComputedStyle(document.body, null).getPropertyValue("background-color");
+	sizeSquared: number = 35;
 	models: any[];
 	windowX: number;
 	windowY: number;
@@ -33,6 +33,13 @@ export default class App {
 	oldMouseX: number;
 	oldMouseY: number;
 	lastScale: number;
+	
+
+	constructor() {
+		this.init();
+	}
+
+
 	init() {
 		this.group = new THREE.Object3D();
 
