@@ -29,5 +29,9 @@
     {
       "files": [ "./src/**/*.js" ]
     }
-  ]
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "typedef": [ true, "call-signature", "arrow-call-signature" ]
+
 }

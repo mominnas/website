@@ -1,21 +1,10 @@
-//import THREE from "./three.r110.js";
-//import THREE from "three";
 import * as THREE from 'three';
-//import OBJLoader from "./three.r110.objloader.js";
-
-//import {OBJLoader} from "./OBJloader.js";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import "../styles.css";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-//import {OrbitControls} from "./OrbitControls.js";
-//import {TweenMax, Quint} from "gsap";
 import { gsap, Quint } from "gsap";
-//import {TweenMax, Quint} from "./gsap-core.js";
 
 
-//THREE = window.THREE;
-//THREE.OrbitControls = OrbitControls;
-//THREE.OBJLoader = OBJLoader;
 
 export default class App {
 	group: THREE.Object3D<THREE.Event> = new THREE.Object3D();
@@ -33,6 +22,13 @@ export default class App {
 	oldMouseX: number;
 	oldMouseY: number;
 	lastScale: number;
+	tiltingEffect!: {
+		body: HTMLElement;
+		docEl: HTMLElement;
+		getMousePos: (event: any, scrollFactor: {left: number, top: number}) => { x: number; y: number; };
+		lerp: (a: number, b: number, n: number) => number;
+		lineEq: (y2: number, y1: number, x2: number, x1: number, currentVal: number) => number;
+	};
 	
 
 	constructor() {
@@ -50,14 +46,25 @@ export default class App {
 		// List of buildings in the scene
 		this.models = [];
 		
-
 		// Set the orbit controls to the center of the scene
 		this.currMouseX = 3;
 		this.oldMouseX = 3;
 		this.oldMouseY = 65;
 		this.lastScale = 155;
 
+		// First we need to set the renderer size and add the renderer to the DOM
+		this.generateScene();
 
+		// Orbit controls for the camera to allow for mouse and touch interaction
+		this.controls = new OrbitControls(
+			this.camera,
+			this.renderer.domElement
+		);
+
+		// Create an empty plane to be used as the background
+		this.backgroundPlane = new THREE.Mesh();
+
+		
 		//this.init();
 	}
 
@@ -151,12 +158,6 @@ export default class App {
 
 	generateControls() {
 
-		// Orbit controls for the camera to allow for mouse and touch interaction
-		this.controls = new OrbitControls(
-			this.camera,
-			this.renderer.domElement
-		);
-
 		// Enable damping so that the camera doesn't move too fast
 		this.controls.dampingFactor = 0.03;
 		
@@ -179,18 +180,18 @@ export default class App {
 	addBackground() {
 		const geometry = new THREE.PlaneGeometry(400, 100);
 		const material = new THREE.MeshPhysicalMaterial({ color: "#fff" });
-		this.backgroundPlane = new THREE.Mesh(geometry, material);
-
+		
+		this.backgroundPlane.material = material;
+		this.backgroundPlane.geometry = geometry;
+		this.backgroundPlane.receiveShadow = false;
+		
 		this.backgroundPlane.position.y = 10;
 		this.backgroundPlane.position.z = -150;
 
 		this.scene.add(this.backgroundPlane);
 
-		// this.currMouseX = 3;
-		// this.oldMouseX = 3;
-		// this.oldMouseY = 65;
-		// this.lastScale = 155;
-		this.tiltFx = {
+		
+		this.tiltingEffect = {
 			body: document.body,
 			docEl: document.documentElement,
 			getMousePos: (event, scrollFactor: any) => {
@@ -218,11 +219,11 @@ export default class App {
 		};
 
 		this.docheight = Math.max(
-			this.tiltFx.body.scrollHeight,
-			this.tiltFx.body.offsetHeight,
-			this.tiltFx.docEl.clientHeight,
-			this.tiltFx.docEl.scrollHeight,
-			this.tiltFx.docEl.offsetHeight
+			this.tiltingEffect.body.scrollHeight,
+			this.tiltingEffect.body.offsetHeight,
+			this.tiltingEffect.docEl.clientHeight,
+			this.tiltingEffect.docEl.scrollHeight,
+			this.tiltingEffect.docEl.offsetHeight
 		);
 
 		this.requestId = requestAnimationFrame(() => this.tilt());
@@ -230,10 +231,10 @@ export default class App {
 		window.addEventListener("mousemove", (ev) => {
 			const docScrolls = {
 				left:
-					this.tiltFx.body.scrollLeft + this.tiltFx.docEl.scrollLeft,
-				top: this.tiltFx.body.scrollTop + this.tiltFx.docEl.scrollTop,
+					this.tiltingEffect.body.scrollLeft + this.tiltingEffect.docEl.scrollLeft,
+				top: this.tiltingEffect.body.scrollTop + this.tiltingEffect.docEl.scrollTop,
 			};
-			const mp = this.tiltFx.getMousePos(ev, docScrolls);
+			const mp = this.tiltingEffect.getMousePos(ev, docScrolls);
 			this.currMouseX = mp.x - docScrolls.left;
 		});
 
@@ -241,11 +242,11 @@ export default class App {
 			"resize",
 			() =>
 			(this.docheight = Math.max(
-				this.tiltFx.body.scrollHeight,
-				this.tiltFx.body.offsetHeight,
-				this.tiltFx.docEl.clientHeight,
-				this.tiltFx.docEl.scrollHeight,
-				this.tiltFx.docEl.offsetHeight
+				this.tiltingEffect.body.scrollHeight,
+				this.tiltingEffect.body.offsetHeight,
+				this.tiltingEffect.docEl.clientHeight,
+				this.tiltingEffect.docEl.scrollHeight,
+				this.tiltingEffect.docEl.offsetHeight
 			))
 		);
 
@@ -256,20 +257,20 @@ export default class App {
 	}
 
 	tilt() {
-		this.oldMouseX = this.tiltFx.lerp(
+		this.oldMouseX = this.tiltingEffect.lerp(
 			this.oldMouseX,
-			this.tiltFx.lineEq(6, 0, this.windowX, 0, this.currMouseX),
+			this.tiltingEffect.lineEq(6, 0, this.windowX, 0, this.currMouseX),
 			0.05
 		);
 		const newScrollingPos = window.pageYOffset;
-		this.oldMouseY = this.tiltFx.lerp(
+		this.oldMouseY = this.tiltingEffect.lerp(
 			this.oldMouseY,
-			this.tiltFx.lineEq(0, 65, this.docheight, 0, newScrollingPos),
+			this.tiltingEffect.lineEq(0, 65, this.docheight, 0, newScrollingPos),
 			0.05
 		);
-		this.lastScale = this.tiltFx.lerp(
+		this.lastScale = this.tiltingEffect.lerp(
 			this.lastScale,
-			this.tiltFx.lineEq(0, 158, this.docheight, 0, newScrollingPos),
+			this.tiltingEffect.lineEq(0, 158, this.docheight, 0, newScrollingPos),
 			0.05
 		);
 		this.camera.position.set(
@@ -328,11 +329,11 @@ export default class App {
 	}
 
 	deleteLoadingIcon() {
-		document.querySelector(".loadingIcon").classList.add("loadIconRemove");
+		document.querySelector(".loadingIcon")!.classList.add("loadIconRemove");
 	}
 
 	deleteScrollIcon() {
-		document.querySelector(".arrows").classList.add("scroll_remove");
+		document.querySelector(".arrows")!.classList.add("scroll_remove");
 	}
 
 	showBuildings() {
@@ -364,8 +365,8 @@ export default class App {
 			.reverse();
 	}
 
-	loadModels(name, callback) {
-		const objLoader = new OBJLoader();
+	loadModels(name: string, callback: { (obj: any): void; (group: THREE.Group): void; }) {
+		const objLoader: OBJLoader = new OBJLoader();
 
 		objLoader.load(name, callback);
 	}
