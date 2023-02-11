@@ -3,6 +3,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import "../styles.css";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { gsap, Quint } from "gsap";
+import { throws } from 'assert';
 
 
 
@@ -29,6 +30,8 @@ export default class App {
 		lerp: (a: number, b: number, n: number) => number;
 		lineEq: (y2: number, y1: number, x2: number, x1: number, currentVal: number) => number;
 	};
+	docheight: number;
+	requestId: number;
 	
 
 	constructor() {
@@ -64,6 +67,8 @@ export default class App {
 		// Create an empty plane to be used as the background
 		this.backgroundPlane = new THREE.Mesh();
 
+		this.docheight = -1;
+		this.requestId = -1;
 		
 		//this.init();
 	}
@@ -92,6 +97,8 @@ export default class App {
 		this.addPlane();
 		this.addBackground();
 
+		this.addSpotLight();
+		
 		// Load models from repository
 		this.loadModels(
 			"https://raw.githubusercontent.com/ca-john/ca-john.github.io/main/homepage_buildings.obj",
@@ -168,8 +175,8 @@ export default class App {
 	addSpotLight() {
 
 		// Add a spotlight to the scene to illuminate the buildings
-		const light = { color: "#05f7ff", x: 641, y: -462, z: 509 };
-		const spotLight = new THREE.SpotLight(light.color, 1);
+		const light = { color: "#f00", x: 641, y: -462, z: 509 };
+		const spotLight = new THREE.SpotLight(light.color, 5);
 
 		spotLight.position.set(light.x, light.y, light.z);
 		spotLight.castShadow = true;
@@ -305,7 +312,7 @@ export default class App {
 		];
 	}
 
-	onLoadModelsComplete(obj) {
+	onLoadModelsComplete(obj: THREE.Object3D) {
 		this.models = [...obj.children].map((model) => {
 			const scale = 0.01;
 
@@ -351,7 +358,7 @@ export default class App {
 		});
 	}
 
-	sortBuildingsByDistance() {
+	sortBuildingsByDistance(): void {
 		this.models
 			.sort((a, b) => {
 				if (a.position.z > b.position.z) {
@@ -365,13 +372,12 @@ export default class App {
 			.reverse();
 	}
 
-	loadModels(name: string, callback: { (obj: any): void; (group: THREE.Group): void; }) {
+	loadModels(name: string, callback: () => void): void {
 		const objLoader: OBJLoader = new OBJLoader();
-
 		objLoader.load(name, callback);
 	}
 
-	draw() {
+	draw(): void {
 		// Size of the box of each building
 		//const modelSize = 3;
 		const modelSize = 3;
