@@ -20,7 +20,7 @@ import { gsap, Quint } from "gsap";
 export default class App {
 	group: THREE.Object3D<THREE.Event> = new THREE.Object3D();
 	backgroundColor: string = window.getComputedStyle(document.body, null).getPropertyValue("background-color");
-	sizeSquared: number;
+	sizeSquared: number = 35;
 	models: any[];
 	windowX: number;
 	windowY: number;
@@ -33,18 +33,9 @@ export default class App {
 	oldMouseX: number;
 	oldMouseY: number;
 	lastScale: number;
-	tiltingLogic: {
-		body: HTMLElement; docEl: HTMLElement; getMousePos: (event: any, scrollFactor: any) => { x: number; y: number; }; 
-		lerp: (a: any, b: any, n: any) => number; lineEq: (y2: any, y1: any, x2: any, x1: any, currentVal: any) => number;
-	};
-	docheight: number;
-	requestId: number;
 	
 
 	constructor() {
-		
-		// The size of our grid of buldings. The total number of buildings will be sizeSquared^2/modelSize
-		this.sizeSquared = 35;
 		this.windowX = window.innerWidth;
 		this.windowY = window.innerHeight;
 		this.scene = new THREE.Scene();
@@ -52,60 +43,7 @@ export default class App {
 			antialias: true,
 			alpha: true,
 		});
-		
 		this.camera = new THREE.PerspectiveCamera(20, this.windowX / this.windowY, 1, 2000);
-		this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-		
-		const geometry = new THREE.PlaneGeometry(400, 100);
-		const material = new THREE.MeshPhysicalMaterial({ color: "#fff" });
-		this.backgroundPlane = new THREE.Mesh(geometry, material);
-		
-		this.currMouseX = this.oldMouseX = 3;
-		this.oldMouseY = 65;
-		this.lastScale = 155;
-
-		this.models = [null];
-
-		this.requestId = -1;
-
-		this.tiltingLogic = {
-			body: document.body,
-			docEl: document.documentElement,
-			getMousePos: (event, scrollFactor: any) => {
-				let posx = 0;
-				let posy = 0;
-				// Generate an event if not already done
-				if (!event) {
-					event = window.event;
-				}
-				if (event.pageX || event.pageY) {
-					posx = event.pageX;
-					posy = event.pageY;
-				} else if (event.clientX || event.clientY) {
-					posx = event.clientX + scrollFactor.left;
-					posy = event.clientY + scrollFactor.top;
-				}
-				return { x: posx, y: posy };
-			},
-			lerp: (a, b, n) => (1 - n) * a + n * b,
-			lineEq: (y2, y1, x2, x1, currentVal) => {
-				let m = (y2 - y1) / (x2 - x1);
-				let b = y1 - m * x1;
-				return m * currentVal + b;
-			},
-		};
-
-
-		this.docheight = Math.max(
-			this.tiltingLogic.body.scrollHeight,
-			this.tiltingLogic.body.offsetHeight,
-			this.tiltingLogic.docEl.clientHeight,
-			this.tiltingLogic.docEl.scrollHeight,
-			this.tiltingLogic.docEl.offsetHeight
-		);
-
-
-
 		this.init();
 	}
 
@@ -127,10 +65,10 @@ export default class App {
 		this.windowY = window.innerHeight;
 
 		this.generateScene();
-		this.setCamera();
+		this.generateCamera();
 		this.generateControls();
 		this.addPlane();
-		this.setBackground();
+		this.addBackground();
 
 		// Load models from repository
 		this.loadModels(
@@ -158,10 +96,10 @@ export default class App {
 
 	generateScene() {
 		this.scene = new THREE.Scene();
-		// this.renderer = new THREE.WebGLRenderer({
-		// 	antialias: true,
-		// 	alpha: true,
-		// });
+		this.renderer = new THREE.WebGLRenderer({
+			antialias: true,
+			alpha: true,
+		});
 		this.renderer.setSize(this.windowX, this.windowY);
 
 		this.renderer.shadowMap.enabled = true;
@@ -178,16 +116,16 @@ export default class App {
 		this.scene.fog = new THREE.FogExp2("#36454F", 0.01);
 	}
 
-	setCamera() {
+	generateCamera() {
 		// Perspective camera with a 20 degree field of view, a 1:1 aspect ratio, 
 		// and a near and far clipping plane of 1 and 2000 respectively
 
-		// this.camera = new THREE.PerspectiveCamera(
-		// 	20,
-		// 	this.windowX / this.windowY,
-		// 	1,
-		// 	2000
-		// );
+		this.camera = new THREE.PerspectiveCamera(
+			20,
+			this.windowX / this.windowY,
+			1,
+			2000
+		);
 
 		// Set the camera position to be 150 units away from the center of the scene
 		this.camera.position.set(0, 50, 150);
@@ -223,58 +161,64 @@ export default class App {
 		this.scene.add(spotLight);
 	}
 
-	setBackground() {
-		// const geometry = new THREE.PlaneGeometry(400, 100);
-		// const material = new THREE.MeshPhysicalMaterial({ color: "#fff" });
-		// this.backgroundPlane = new THREE.Mesh(geometry, material);
+	addBackground() {
+		const geometry = new THREE.PlaneGeometry(400, 100);
+		const material = new THREE.MeshPhysicalMaterial({ color: "#fff" });
+		this.backgroundPlane = new THREE.Mesh(geometry, material);
 
 		this.backgroundPlane.position.y = 10;
 		this.backgroundPlane.position.z = -150;
 
 		this.scene.add(this.backgroundPlane);
 
-		// this.currMouseX = 3;
-		// this.oldMouseX = 3;
-		// this.oldMouseY = 65;
-		// this.lastScale = 155;
-		// this.tiltingLogic = {
-		// 	body: document.body,
-		// 	docEl: document.documentElement,
-		// 	getMousePos: (event, scrollFactor: any) => {
-		// 		let posx = 0;
-		// 		let posy = 0;
-		// 		// Generate an event if not already done
-		// 		if (!event) {
-		// 			event = window.event;
-		// 		}
-		// 		if (event.pageX || event.pageY) {
-		// 			posx = event.pageX;
-		// 			posy = event.pageY;
-		// 		} else if (event.clientX || event.clientY) {
-		// 			posx = event.clientX + scrollFactor.left;
-		// 			posy = event.clientY + scrollFactor.top;
-		// 		}
-		// 		return { x: posx, y: posy };
-		// 	},
-		// 	lerp: (a, b, n) => (1 - n) * a + n * b,
-		// 	lineEq: (y2, y1, x2, x1, currentVal) => {
-		// 		let m = (y2 - y1) / (x2 - x1);
-		// 		let b = y1 - m * x1;
-		// 		return m * currentVal + b;
-		// 	},
-		// };
+		this.currMouseX = 3;
+		this.oldMouseX = 3;
+		this.oldMouseY = 65;
+		this.lastScale = 155;
+		this.tiltFx = {
+			body: document.body,
+			docEl: document.documentElement,
+			getMousePos: (event, scrollFactor: any) => {
+				let posx = 0;
+				let posy = 0;
+				// Generate an event if not already done
+				if (!event) {
+					event = window.event;
+				}
+				if (event.pageX || event.pageY) {
+					posx = event.pageX;
+					posy = event.pageY;
+				} else if (event.clientX || event.clientY) {
+					posx = event.clientX + scrollFactor.left;
+					posy = event.clientY + scrollFactor.top;
+				}
+				return { x: posx, y: posy };
+			},
+			lerp: (a, b, n) => (1 - n) * a + n * b,
+			lineEq: (y2, y1, x2, x1, currentVal) => {
+				let m = (y2 - y1) / (x2 - x1);
+				let b = y1 - m * x1;
+				return m * currentVal + b;
+			},
+		};
 
-		
+		this.docheight = Math.max(
+			this.tiltFx.body.scrollHeight,
+			this.tiltFx.body.offsetHeight,
+			this.tiltFx.docEl.clientHeight,
+			this.tiltFx.docEl.scrollHeight,
+			this.tiltFx.docEl.offsetHeight
+		);
 
 		this.requestId = requestAnimationFrame(() => this.tilt());
 
 		window.addEventListener("mousemove", (ev) => {
 			const docScrolls = {
 				left:
-					this.tiltingLogic.body.scrollLeft + this.tiltingLogic.docEl.scrollLeft,
-				top: this.tiltingLogic.body.scrollTop + this.tiltingLogic.docEl.scrollTop,
+					this.tiltFx.body.scrollLeft + this.tiltFx.docEl.scrollLeft,
+				top: this.tiltFx.body.scrollTop + this.tiltFx.docEl.scrollTop,
 			};
-			const mp = this.tiltingLogic.getMousePos(ev, docScrolls);
+			const mp = this.tiltFx.getMousePos(ev, docScrolls);
 			this.currMouseX = mp.x - docScrolls.left;
 		});
 
@@ -282,11 +226,11 @@ export default class App {
 			"resize",
 			() =>
 			(this.docheight = Math.max(
-				this.tiltingLogic.body.scrollHeight,
-				this.tiltingLogic.body.offsetHeight,
-				this.tiltingLogic.docEl.clientHeight,
-				this.tiltingLogic.docEl.scrollHeight,
-				this.tiltingLogic.docEl.offsetHeight
+				this.tiltFx.body.scrollHeight,
+				this.tiltFx.body.offsetHeight,
+				this.tiltFx.docEl.clientHeight,
+				this.tiltFx.docEl.scrollHeight,
+				this.tiltFx.docEl.offsetHeight
 			))
 		);
 
@@ -297,20 +241,20 @@ export default class App {
 	}
 
 	tilt() {
-		this.oldMouseX = this.tiltingLogic.lerp(
+		this.oldMouseX = this.tiltFx.lerp(
 			this.oldMouseX,
-			this.tiltingLogic.lineEq(6, 0, this.windowX, 0, this.currMouseX),
+			this.tiltFx.lineEq(6, 0, this.windowX, 0, this.currMouseX),
 			0.05
 		);
 		const newScrollingPos = window.pageYOffset;
-		this.oldMouseY = this.tiltingLogic.lerp(
+		this.oldMouseY = this.tiltFx.lerp(
 			this.oldMouseY,
-			this.tiltingLogic.lineEq(0, 65, this.docheight, 0, newScrollingPos),
+			this.tiltFx.lineEq(0, 65, this.docheight, 0, newScrollingPos),
 			0.05
 		);
-		this.lastScale = this.tiltingLogic.lerp(
+		this.lastScale = this.tiltFx.lerp(
 			this.lastScale,
-			this.tiltingLogic.lineEq(0, 158, this.docheight, 0, newScrollingPos),
+			this.tiltFx.lineEq(0, 158, this.docheight, 0, newScrollingPos),
 			0.05
 		);
 		this.camera.position.set(
@@ -369,11 +313,11 @@ export default class App {
 	}
 
 	deleteLoadingIcon() {
-		document.querySelector(".loadingIcon")!.classList.add("loadIconRemove");
+		document.querySelector(".loadingIcon").classList.add("loadIconRemove");
 	}
 
 	deleteScrollIcon() {
-		document.querySelector(".arrows")!.classList.add("scroll_remove");
+		document.querySelector(".arrows").classList.add("scroll_remove");
 	}
 
 	showBuildings() {

@@ -220,7 +220,7 @@ body {
 	margin: 0;
 }
 
-.loader {
+.loadingIcon {
 	position: fixed;
 	z-index: 10000;
 	top: 0;
@@ -235,25 +235,25 @@ body {
 	pointer-events: none;
 }
 
-.loader--done {
+.loadIconRemove {
 	opacity: 0;
 	transition: opacity 1.4s ease-out;
 }
 
-.loader__icon {
+.loadIconAnim {
 	width: 100px;
 	height: 100px;
 }
 
-.loader__icon g {
+/* .loadIconAnim g {
 	-webkit-animation: showHide 0.8s steps(4, end) infinite forwards;
 	animation: showHide 0.8s steps(4, end) infinite forwards;
-}
+} */
 
-.loader__icon g:last-child {
+/* .loadIconAnim g:last-child {
 	-webkit-animation-delay: 0.5s;
 	animation-delay: 0.5s;
-}
+} */
 
 @-webkit-keyframes showHide {
 	to {
@@ -266,10 +266,18 @@ body {
 		opacity: 0;
 	}
 }
-.loader--done .loader__icon g {
+
+/* .loadIconRemove .loadIconAnim g {
+	opacity: 0;
+	transition: opacity 0.5s;
+} */
+
+
+.loadIconRemove g {
 	opacity: 0;
 	transition: opacity 0.5s;
 }
+
 
 canvas {
 	width: 100%;
@@ -450,6 +458,12 @@ a:focus {
 	left: 50%;
 	margin-left: -30px;
 	bottom: 20px;
+}
+
+
+.scroll_remove {
+	opacity: 0;
+	pointer-events: none;
 }
 
 .arrows path {
