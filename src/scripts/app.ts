@@ -36,6 +36,7 @@ export default class App {
 	
 
 	constructor() {
+
 		this.windowX = window.innerWidth;
 		this.windowY = window.innerHeight;
 		this.scene = new THREE.Scene();
@@ -43,29 +44,43 @@ export default class App {
 			antialias: true,
 			alpha: true,
 		});
+		
 		this.camera = new THREE.PerspectiveCamera(20, this.windowX / this.windowY, 1, 2000);
-		this.init();
+
+		// List of buildings in the scene
+		this.models = [];
+		
+
+		// Set the orbit controls to the center of the scene
+		this.currMouseX = 3;
+		this.oldMouseX = 3;
+		this.oldMouseY = 65;
+		this.lastScale = 155;
+
+
+		//this.init();
 	}
 
 
 	init() {
-		this.group = new THREE.Object3D();
 
-		this.backgroundColor = window
-			.getComputedStyle(document.body, null)
-			.getPropertyValue("background-color");
+		//this.group = new THREE.Object3D();
+
+		// this.backgroundColor = window
+		// 	.getComputedStyle(document.body, null)
+		// 	.getPropertyValue("background-color");
 
 
-		this.sizeSquared = 35;
+		//this.sizeSquared = 35;
 
 		// List of buildings in the scene
-		this.models = [];
+		//this.models = [];
 
-		this.windowX = window.innerWidth;
-		this.windowY = window.innerHeight;
+		// this.windowX = window.innerWidth;
+		// this.windowY = window.innerHeight;
 
 		this.generateScene();
-		this.generateCamera();
+		this.setCamera();
 		this.generateControls();
 		this.addPlane();
 		this.addBackground();
@@ -95,11 +110,11 @@ export default class App {
 	}
 
 	generateScene() {
-		this.scene = new THREE.Scene();
-		this.renderer = new THREE.WebGLRenderer({
-			antialias: true,
-			alpha: true,
-		});
+		// this.scene = new THREE.Scene();
+		// this.renderer = new THREE.WebGLRenderer({
+		// 	antialias: true,
+		// 	alpha: true,
+		// });
 		this.renderer.setSize(this.windowX, this.windowY);
 
 		this.renderer.shadowMap.enabled = true;
@@ -116,16 +131,16 @@ export default class App {
 		this.scene.fog = new THREE.FogExp2("#36454F", 0.01);
 	}
 
-	generateCamera() {
+	setCamera() {
 		// Perspective camera with a 20 degree field of view, a 1:1 aspect ratio, 
 		// and a near and far clipping plane of 1 and 2000 respectively
 
-		this.camera = new THREE.PerspectiveCamera(
-			20,
-			this.windowX / this.windowY,
-			1,
-			2000
-		);
+		// this.camera = new THREE.PerspectiveCamera(
+		// 	20,
+		// 	this.windowX / this.windowY,
+		// 	1,
+		// 	2000
+		// );
 
 		// Set the camera position to be 150 units away from the center of the scene
 		this.camera.position.set(0, 50, 150);
@@ -171,10 +186,10 @@ export default class App {
 
 		this.scene.add(this.backgroundPlane);
 
-		this.currMouseX = 3;
-		this.oldMouseX = 3;
-		this.oldMouseY = 65;
-		this.lastScale = 155;
+		// this.currMouseX = 3;
+		// this.oldMouseX = 3;
+		// this.oldMouseY = 65;
+		// this.lastScale = 155;
 		this.tiltFx = {
 			body: document.body,
 			docEl: document.documentElement,
