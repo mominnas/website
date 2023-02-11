@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import "../styles.css";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { gsap, Quint } from "gsap";
+import { gsap } from "gsap";
 import { throws } from 'assert';
 
 
@@ -347,12 +347,12 @@ export default class App {
 		this.sortBuildingsByDistance();
 
 		this.models.forEach((building, index) => {
-			
+			// Apply loading animations to each building model
 			gsap.to(building.position, {
-				duration: 0.6 + index / 4000,
+				duration: 0.8 + (index / 4000),
 				y: 1,
-				ease: Quint.easeOut,
-				delay: index / 4000,
+				ease: "Power4.out",
+				delay: (index / 4000),
 			});
 
 		});
@@ -372,7 +372,7 @@ export default class App {
 			.reverse();
 	}
 
-	loadModels(name: string, callback: () => void): void {
+	loadModels(name: string, callback: (obj: THREE.Group) => void): void {
 		const objLoader: OBJLoader = new OBJLoader();
 		objLoader.load(name, callback);
 	}
