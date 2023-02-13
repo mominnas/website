@@ -3,7 +3,6 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import "../styles.css";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { gsap } from "gsap";
-import { throws } from 'assert';
 
 
 
