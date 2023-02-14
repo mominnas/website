@@ -41,6 +41,7 @@ export default class App {
 		this.renderer = new THREE.WebGLRenderer({
 			antialias: true,
 			alpha: true,
+			precision: "lowp",
 		});
 		
 		this.camera = new THREE.PerspectiveCamera(20, this.windowX / this.windowY, 1, 2000);
@@ -69,6 +70,22 @@ export default class App {
 		this.docheight = -1;
 		this.requestId = -1;
 		
+
+		let limitBottom = document.documentElement.offsetHeight - window.innerHeight;
+		window.addEventListener("scroll",function(){
+		if(document.documentElement.scrollTop == 0){
+			console.log("Window scroll is at the top");
+			document.querySelector(".arrows")!.classList.remove("scroll_remove");
+		}
+		if(document.documentElement.scrollTop != 0){
+			document.querySelector(".arrows")!.classList.add("scroll_remove");
+		}
+		if(document.documentElement.scrollTop == limitBottom){
+			console.log("Window scroll is at the bottom");
+		}
+		})
+
+
 		//this.init();
 	}
 
@@ -114,6 +131,7 @@ export default class App {
 		this.renderer.shadowMap.enabled = true;
 		// Variance Shadow Map for the building models, *might impact performance*
 		this.renderer.shadowMap.type = THREE.VSMShadowMap;
+
 
 		// Add the renderer to the DOM
 		document.body
@@ -290,7 +308,7 @@ export default class App {
 			const scale = 0.01;
 
 			model.scale.set(scale, scale, scale);
-			model.position.set(0, -14, 0);
+			model.position.set(0, -20, 0);
 			model.receiveShadow = true;
 			model.castShadow = true;
 
