@@ -74,14 +74,10 @@ export default class App {
 		let limitBottom = document.documentElement.offsetHeight - window.innerHeight;
 		window.addEventListener("scroll",function(){
 		if(document.documentElement.scrollTop == 0){
-			console.log("Window scroll is at the top");
 			document.querySelector(".arrows")!.classList.remove("scroll_remove");
 		}
 		if(document.documentElement.scrollTop != 0){
 			document.querySelector(".arrows")!.classList.add("scroll_remove");
-		}
-		if(document.documentElement.scrollTop == limitBottom){
-			console.log("Window scroll is at the bottom");
 		}
 		})
 
