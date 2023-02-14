@@ -75,21 +75,6 @@ export default class App {
 
 	init() {
 
-		//this.group = new THREE.Object3D();
-
-		// this.backgroundColor = window
-		// 	.getComputedStyle(document.body, null)
-		// 	.getPropertyValue("background-color");
-
-
-		//this.sizeSquared = 35;
-
-		// List of buildings in the scene
-		//this.models = [];
-
-		// this.windowX = window.innerWidth;
-		// this.windowY = window.innerHeight;
-
 		this.generateScene();
 		this.setCamera();
 		this.generateControls();
@@ -123,11 +108,7 @@ export default class App {
 	}
 
 	generateScene() {
-		// this.scene = new THREE.Scene();
-		// this.renderer = new THREE.WebGLRenderer({
-		// 	antialias: true,
-		// 	alpha: true,
-		// });
+		// Set the renderer size and add the renderer to the DOM
 		this.renderer.setSize(this.windowX, this.windowY);
 
 		this.renderer.shadowMap.enabled = true;
@@ -145,15 +126,6 @@ export default class App {
 	}
 
 	setCamera() {
-		// Perspective camera with a 20 degree field of view, a 1:1 aspect ratio, 
-		// and a near and far clipping plane of 1 and 2000 respectively
-
-		// this.camera = new THREE.PerspectiveCamera(
-		// 	20,
-		// 	this.windowX / this.windowY,
-		// 	1,
-		// 	2000
-		// );
 
 		// Set the camera position to be 150 units away from the center of the scene
 		this.camera.position.set(0, 50, 150);
@@ -184,6 +156,8 @@ export default class App {
 	}
 
 	addBackground() {
+
+		// Create a plane to be used as the background with a geometry and mesh
 		const geometry = new THREE.PlaneGeometry(400, 100);
 		const material = new THREE.MeshPhysicalMaterial({ color: "#fff" });
 		
@@ -377,8 +351,7 @@ export default class App {
 	}
 
 	draw(): void {
-		// Size of the box of each building
-		//const modelSize = 3;
+
 		const modelSize = 3;
 
 		const meshParams = {
@@ -435,3 +408,8 @@ export default class App {
 		requestAnimationFrame(this.animate.bind(this));
 	}
 }
+
+// export function getModel(): unknown {
+//     throw new Error('Function not implemented.');
+// }
+
