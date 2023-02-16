@@ -5,6 +5,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { gsap } from "gsap";
 
 
+import studio from '@theatre/studio'
+import { getProject, types } from '@theatre/core'
+
 
 export default class App {
 	group: THREE.Object3D<THREE.Event> = new THREE.Object3D();
@@ -83,7 +86,7 @@ export default class App {
 		this.addPlane();
 		this.addBackground();
 		this.addRemoveScroll();
-		//this.addSpotLight();
+		this.addSpotLight();
 		this.addPointLight();
 		// Load models from repository
 		this.loadModels(
@@ -128,7 +131,7 @@ export default class App {
 			pointLightColor,
 			pointLightIntensity
 		);
-		pointLight.position.set(50, 180, -50);
+		pointLight.position.set(50, 100, -50);
 		this.scene.add(pointLight);
 	}
 

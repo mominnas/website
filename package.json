@@ -1,6 +1,6 @@
 {
     "name": "personal-website",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "Personal Website",
     "main": "src/index.ts",
     "keywords": [
@@ -51,6 +51,8 @@
         "webpack-merge": "^5.8.0"
     },
     "dependencies": {
+        "@theatre/core": "^0.6.0",
+        "@theatre/studio": "^0.6.0",
         "awesome-typescript-loader": "^5.2.1",
         "gsap": "^3.11.4",
         "source-map-loader": "^4.0.1"
