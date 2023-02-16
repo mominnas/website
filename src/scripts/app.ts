@@ -41,9 +41,9 @@ export default class App {
 		this.renderer = new THREE.WebGLRenderer({
 			antialias: true,
 			alpha: true,
-			precision: "lowp",
+			//precision: "lowp",
 		});
-		
+
 		this.camera = new THREE.PerspectiveCamera(20, this.windowX / this.windowY, 1, 2000);
 
 		// List of buildings in the scene
@@ -69,17 +69,6 @@ export default class App {
 
 		this.docheight = -1;
 		this.requestId = -1;
-		
-
-		let limitBottom = document.documentElement.offsetHeight - window.innerHeight;
-		window.addEventListener("scroll",function(){
-		if(document.documentElement.scrollTop == 0){
-			document.querySelector(".arrows")!.classList.remove("scroll_remove");
-		}
-		if(document.documentElement.scrollTop != 0){
-			document.querySelector(".arrows")!.classList.add("scroll_remove");
-		}
-		})
 
 
 		//this.init();
@@ -93,9 +82,9 @@ export default class App {
 		this.generateControls();
 		this.addPlane();
 		this.addBackground();
-
-		this.addSpotLight();
-		
+		this.addRemoveScroll();
+		//this.addSpotLight();
+		this.addPointLight();
 		// Load models from repository
 		this.loadModels(
 			"https://raw.githubusercontent.com/ca-john/ca-john.github.io/main/homepage_buildings.obj",
@@ -103,16 +92,6 @@ export default class App {
 		);
 
 		this.animate();
-
-		// Add a point light to illuminate the buildings
-		const pointLightColor = "#05f7ff";
-		const pointLightIntensity = 10;
-		const pointLight = new THREE.PointLight(
-			pointLightColor,
-			pointLightIntensity
-		);
-		pointLight.position.set(50, 180, -50);
-		this.scene.add(pointLight);
 
 		//this.addAmbientLight();
 
@@ -138,6 +117,34 @@ export default class App {
 		// might be a render bottleneck
 		this.scene.fog = new THREE.FogExp2("#36454F", 0.01);
 	}
+
+
+
+	addPointLight(){
+		// Add a point light to illuminate the buildings
+		const pointLightColor = "#05f7ff";
+		const pointLightIntensity = 10;
+		const pointLight = new THREE.PointLight(
+			pointLightColor,
+			pointLightIntensity
+		);
+		pointLight.position.set(50, 180, -50);
+		this.scene.add(pointLight);
+	}
+
+
+	addRemoveScroll(){
+		let limitBottom = document.documentElement.offsetHeight - window.innerHeight; // Get the height of the document which is the height of the viewport plus the height of the document
+		window.addEventListener("scroll",function(){ // When the user scrolls
+			if(document.documentElement.scrollTop == 0){ // If the user is at the top of the document
+				document.querySelector(".arrows")!.classList.remove("scroll_remove"); // Remove the class scroll_remove from the element with the class arrows
+			}
+			if(document.documentElement.scrollTop != 0){ // If the user is not at the top of the document
+				document.querySelector(".arrows")!.classList.add("scroll_remove"); // Add the class scroll_remove to the element with the class arrows
+			}
+		})
+	}
+
 
 	setCamera() {
 
