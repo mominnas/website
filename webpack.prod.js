@@ -3,6 +3,7 @@ const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = merge(common, {
 	
@@ -24,6 +25,7 @@ module.exports = merge(common, {
 		minimize: true,
 		minimizer: 
 		[
+
 			new TerserPlugin({
 
 				//minify: TerserPlugin.swcMinify,
@@ -45,6 +47,10 @@ module.exports = merge(common, {
 				// // Link to options - https://github.com/mishoo/UglifyJS#minify-options
 				// terserOptions: {},
 			}),
+
+			`...`,
+			new CssMinimizerPlugin(),
+
 		],
 
 		runtimeChunk: true,
@@ -60,11 +66,6 @@ module.exports = merge(common, {
 		removeAvailableModules: false,
 		
 	},
-
-
-
-
-
 
 
 
