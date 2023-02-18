@@ -5,8 +5,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { gsap } from "gsap";
 
 
-import studio from '@theatre/studio'
-import { getProject, types } from '@theatre/core'
+import studio from '@theatre/studio';
+import { getProject, types } from '@theatre/core';
 
 
 export default class App {
@@ -73,7 +73,7 @@ export default class App {
 		this.docheight = -1;
 		this.requestId = -1;
 
-
+		
 		//this.init();
 	}
 
@@ -100,6 +100,30 @@ export default class App {
 
 		//document.addEventListener('scroll', () => { arrows.classList.add("hiddenByScroll")});
 		
+		this.theatreInit();
+		this.theatreStudioInit();
+
+
+	}
+
+
+
+
+	theatreInit(){
+
+		
+		
+	}
+
+
+	theatreStudioInit(){
+
+		//this.studio = require('@theatre/studio');
+		
+		if (process.env.NODE_ENV !== 'production') {
+			studio.initialize();
+		}
+	
 	}
 
 	generateScene() {
