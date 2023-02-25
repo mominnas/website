@@ -357,7 +357,7 @@ a:focus {
 
 .content__title-inner {
 	display: block;
-	font-size: 10vh;
+	font-size: 3em;
 	color: var(--color-text-alt);
 }
 
