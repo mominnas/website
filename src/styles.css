@@ -415,12 +415,14 @@ a:focus {
 		left: 0;
 		display: grid;
 		align-content: space-between;
+		justify-items: center;
 		width: 100%;
 		max-width: none;
 		height: 100vh;
 		padding: 4rem;
 		pointer-events: none;
-		grid-template-columns: 40% 20% 40%;
+		/* grid-template-columns: 40% 20% 40%; */
+		grid-template-columns: 50% 50%;
 		grid-template-rows: auto auto auto;
 		grid-template-areas: "title ... links" "... scroll ..." "... ... ...";
 	}
