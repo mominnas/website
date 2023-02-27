@@ -102,7 +102,8 @@ export default class App {
 		
 		this.theatreInit();
 		this.theatreStudioInit();
-
+		
+		this.buttonGradient();
 
 	}
 
@@ -161,7 +162,7 @@ export default class App {
 
 
 	addRemoveScroll(){
-		let limitBottom = document.documentElement.offsetHeight - window.innerHeight; // Get the height of the document which is the height of the viewport plus the height of the document
+		// let limitBottom = document.documentElement.offsetHeight - window.innerHeight; // Get the height of the document which is the height of the viewport minus the height of the document
 		window.addEventListener("scroll",function(){ // When the user scrolls
 			if(document.documentElement.scrollTop == 0){ // If the user is at the top of the document
 				document.querySelector(".arrows")!.classList.remove("scroll_remove"); // Remove the class scroll_remove from the element with the class arrows
@@ -170,6 +171,24 @@ export default class App {
 				document.querySelector(".arrows")!.classList.add("scroll_remove"); // Add the class scroll_remove to the element with the class arrows
 			}
 		})
+	}
+
+
+
+	buttonGradient(){
+
+
+
+		document.querySelector<HTMLElement>(".button")!.onmousemove = (e) => {
+
+			const x = e.pageX - (e.target as HTMLSpanElement).offsetLeft;
+			const y = e.pageY - (e.target as HTMLSpanElement).offsetTop;
+		
+			(e.target as HTMLSpanElement).style.setProperty('--x', `${ x }px`);
+			(e.target as HTMLSpanElement).style.setProperty('--y', `${ y }px`);
+
+			
+		}
 	}
 
 
