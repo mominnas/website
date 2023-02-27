@@ -345,6 +345,7 @@ a:hover, a:focus {
 	position: relative;
 	justify-content: flex-start;
 	align-items: center;
+	place-items: center;
 	font-family: rift, sans-serif;
 	text-transform: uppercase;
 	font-style: italic;
@@ -355,6 +356,7 @@ a:hover, a:focus {
 	margin-top: 100vh;
 	justify-content: flex-start;
 	align-items: center;
+	place-items: center;
 	flex-direction: column;
 }
 
@@ -365,9 +367,10 @@ a:hover, a:focus {
 
 .content__title-inner {
 	display: block;
-	font-size: 3em;
+	font-size: 5vw;
 	color: var(--color-text-alt);
 }
+
 
 .content__title-sub {
 	display: block;
@@ -375,6 +378,24 @@ a:hover, a:focus {
 	font-size: 1.5vh;
 	margin-right: 0.25rem;
 }
+
+
+@media screen and (max-width: 500px){
+
+	.content__title-inner {
+		font-size: 15vw;
+	}
+
+
+	.content__title-sub {
+
+		font-size: 5vw;
+	}
+
+}
+
+
+
 
 /* .content__title-inner {
 	display: block;
