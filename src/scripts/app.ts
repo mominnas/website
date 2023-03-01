@@ -177,18 +177,45 @@ export default class App {
 
 	buttonGradient(){
 
-
-
-		document.querySelector<HTMLElement>(".button")!.onmousemove = (e) => {
+		document.querySelectorAll<HTMLElement>(".button").forEach(element => {
+			
+			element.onmousemove = (e) => {
 
 			const x = e.pageX - (e.target as HTMLSpanElement).offsetLeft;
 			const y = e.pageY - (e.target as HTMLSpanElement).offsetTop;
 		
 			(e.target as HTMLSpanElement).style.setProperty('--x', `${ x }px`);
 			(e.target as HTMLSpanElement).style.setProperty('--y', `${ y }px`);
+			
+			
+			}
+
+			element.onmouseenter = (e) => {
+
+				
+
+				(e.target as HTMLSpanElement).style.setProperty('border', `3px solid transparent`);
+
+
+			}
+
+			element.onmouseleave = (e) => {
+
+				(e.target as HTMLSpanElement).style.setProperty('border', `0px solid transparent`);
+			}
+
+		});
+
+		// document.querySelector<HTMLElement>(".button")!.onmousemove = (e) => {
+
+		// 	const x = e.pageX - (e.target as HTMLSpanElement).offsetLeft;
+		// 	const y = e.pageY - (e.target as HTMLSpanElement).offsetTop;
+		
+		// 	(e.target as HTMLSpanElement).style.setProperty('--x', `${ x }px`);
+		// 	(e.target as HTMLSpanElement).style.setProperty('--y', `${ y }px`);
 
 			
-		}
+		// }
 	}
 
 

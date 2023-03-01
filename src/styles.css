@@ -193,7 +193,7 @@ body {
 	--color-text-alt: #000000;
 	--color-bg: #343c3c;
 	--color-link: #a9bab1;
-	--color-link-hover: #ff0000;
+	--color-link-hover: #ffffff;
 	color: var(--color-text);
 	background-color: var(--color-bg);
 	font-family: Futura, "futura-pt", Arial, sans-serif;
@@ -279,12 +279,12 @@ canvas {
 	-webkit-appearance: none;
 	   -moz-appearance: none;
 			appearance: none;
-	padding: 0.5em 1em;
+	padding: 0.5em 1.5em;
 	color: white;
 	cursor: pointer;
 	outline: none;
 	border-radius: 100px;
-	border: 2px solid transparent;
+	border: 0px solid transparent;
 	background: linear-gradient(#000, #000) padding-box, radial-gradient(farthest-corner at var(--x) var(--y), #00C9A7, #845EC2) border-box;
   }
 
@@ -433,7 +433,7 @@ a:hover, a:focus {
 	}
 } */
 /* @media screen and (min-width: 35em) { */
-@media screen {
+
 	.frame {
 		position: fixed;
 		text-align: left;
@@ -442,14 +442,14 @@ a:hover, a:focus {
 		left: 0;
 		display: grid;
 		align-content: space-between;
-		justify-items: center;
+		justify-items: left;
 		width: 100%;
 		max-width: none;
 		height: 100vh;
 		padding: 4rem;
 		pointer-events: none;
-		/* grid-template-columns: 40% 20% 40%; */
-		grid-template-columns: 50% 50%;
+		grid-template-columns: 40% 20% 40%;
+		/* grid-template-columns: 50% 50%; */
 		grid-template-rows: auto auto auto;
 		grid-template-areas: "title ... links" "... scroll ..." "... ... ...";
 	}
@@ -490,7 +490,7 @@ a:hover, a:focus {
 		height: 100vh;
 		justify-content: center;
 	}
-}
+
 
 .arrows {
 	/* grid-area: scroll; */
