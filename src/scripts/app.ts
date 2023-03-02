@@ -90,7 +90,7 @@ export default class App {
 		this.addPointLight();
 		// Load models from repository
 		this.loadModels(
-			"https://raw.githubusercontent.com/ca-john/ca-john.github.io/main/homepage_buildings.obj",
+			"https://raw.githubusercontent.com/ca-john/ca-john.github.io/main/assets/homepage_buildings.obj",
 			this.onLoadModelsComplete.bind(this)
 		);
 
