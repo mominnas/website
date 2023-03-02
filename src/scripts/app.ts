@@ -177,27 +177,33 @@ export default class App {
 
 	buttonGradient(){
 
+		// Get the border width and padding from the css variables
+		const borderpx: number = Number(getComputedStyle(document.querySelector(".button")!).getPropertyValue('--borderpx').match(/(\d+)/)![0]);
+		const paddingx: number = Number(getComputedStyle(document.querySelector(".button")!).getPropertyValue('--paddingx').match(/(\d+)/)![0]);
+		const paddingy: number = Number(getComputedStyle(document.querySelector(".button")!).getPropertyValue('--paddingy').match(/(\d+)/)![0]);
+
 		document.querySelectorAll<HTMLElement>(".button").forEach(element => {
 			
+			// Get the x and y position of the mouse relative to the element
 			element.onmousemove = (e) => {
-
-			const x = e.pageX - (e.target as HTMLSpanElement).offsetLeft;
-			const y = e.pageY - (e.target as HTMLSpanElement).offsetTop;
-		
-			(e.target as HTMLSpanElement).style.setProperty('--x', `${ x }px`);
-			(e.target as HTMLSpanElement).style.setProperty('--y', `${ y }px`);
+				
+				const x = e.pageX - (e.target as HTMLSpanElement).offsetLeft;
+				const y = e.pageY - (e.target as HTMLSpanElement).offsetTop;
+				// Set the css variables to the x and y position of the mouse
+				(e.target as HTMLSpanElement).style.setProperty('--x', `${ x }px`);
+				(e.target as HTMLSpanElement).style.setProperty('--y', `${ y }px`);
 			
 			}
 
 			element.onmouseenter = (e) => {
-
-				(e.target as HTMLSpanElement).style.setProperty('border', `3px solid transparent`);
-				
-
+				// Set the border width and padding to the css variables so that the padding is decreased and the border is increased
+				(e.target as HTMLSpanElement).style.setProperty('border', `${ borderpx }px solid transparent`);
+				(e.target as HTMLSpanElement).style.setProperty('padding', `${ paddingy - borderpx }px ${ paddingx - borderpx }px`);
 			}
 			
 			element.onmouseleave = (e) => {
-
+				// Set the border width and padding to the css variables so that the border is reset and the padding is increased
+				(e.target as HTMLSpanElement).style.setProperty('padding', `${ paddingy }px ${ paddingx }px`);
 				(e.target as HTMLSpanElement).style.setProperty('border', `0px solid transparent`);
 				
 			

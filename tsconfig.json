@@ -9,6 +9,12 @@
       "moduleResolution": "node",
       "forceConsistentCasingInFileNames": true,
       "strict": true,
+      "noImplicitThis": true,
+      "strictBindCallApply": true,
+      "strictNullChecks": true,
+      "strictFunctionTypes": true,
+      "strictPropertyInitialization": true,
+      "alwaysStrict": true,
       
     },
     "include": [

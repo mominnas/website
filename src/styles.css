@@ -273,13 +273,19 @@ canvas {
 
 
 .button {
+	
 	--x: 50%;
 	--y: 50%;
+	
+	--paddingx: 28px;
+	--paddingy: 10px;
+	--borderpx: 5px;
+
 	position: relative;
 	-webkit-appearance: none;
 	   -moz-appearance: none;
 			appearance: none;
-	padding: 0.5em 1.5em;
+	padding: var(--paddingy) var(--paddingx);
 	color: white;
 	cursor: pointer;
 	outline: none;
