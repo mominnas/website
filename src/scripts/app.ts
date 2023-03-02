@@ -187,21 +187,20 @@ export default class App {
 			(e.target as HTMLSpanElement).style.setProperty('--x', `${ x }px`);
 			(e.target as HTMLSpanElement).style.setProperty('--y', `${ y }px`);
 			
-			
 			}
 
 			element.onmouseenter = (e) => {
 
+				(e.target as HTMLSpanElement).style.setProperty('border', `3px solid transparent`);
 				
 
-				(e.target as HTMLSpanElement).style.setProperty('border', `3px solid transparent`);
-
-
 			}
-
+			
 			element.onmouseleave = (e) => {
 
 				(e.target as HTMLSpanElement).style.setProperty('border', `0px solid transparent`);
+				
+			
 			}
 
 		});
