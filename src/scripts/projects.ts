@@ -1,29 +1,27 @@
 import anime from "animejs/lib/anime.es.js";
 
-
 export default class App {
 
     toggled: boolean;
     columns: number;
     rows: number;
-    wrapper: HTMLElement | null;
+    tiles: HTMLElement | null;
     
     constructor() {
     
         this.columns = 0
         this.rows = 0
         this.toggled = false;
-        this.wrapper = null;
+        this.tiles = null;
     
     }
     
     
     init() {
     
-        this.wrapper = document.getElementById("tiles");
-        this.createGrid();
-        window.addEventListener('resize', this.createGrid);
-    
+        this.tiles = document.getElementById("tiles");
+        this.generateGrid();
+        window.addEventListener('resize', this.generateGrid);
     }
 
 
@@ -31,13 +29,13 @@ export default class App {
 
     
 
-    toggle = () => {
+    toggleHandler = (): void => {
         this.toggled = !this.toggled;
-        document.body.classList.toggle("toggled");
+        document.body.classList.toggle("toggled", true);
     }
 
-    handleOnClick = (index: number) => {
-        this.toggle();
+    clickHandler = (index: number) => {
+        this.toggleHandler();
     
         anime({
             targets: ".tile",
@@ -47,39 +45,45 @@ export default class App {
             from: index
             })
         });
+    
     }
 
     createTile = (index: number) => {
         
-        const tile = document.createElement("div");
-    
+        // create a new div element
+        const tile: HTMLDivElement = document.createElement("div");
+
+        // add the class "tile" to it
         tile.classList.add("tile");
         
+        // set the opacity to 0 if it's toggled, or 1 if it isn't
         tile.style.opacity = String(this.toggled ? 0 : 1);
         
-        tile.onclick = e => this.handleOnClick(index);
+        // set the onclick method to the clickHandler, passing the index
+        tile.onclick = e => this.clickHandler(index);
         
         return tile;
     }
 
-    createTiles = (quantity: number) => {
+    generateTiles = (quantity: number) => {
     Array.from(Array(quantity)).map((tile, index) => {
-        this.wrapper!.appendChild(this.createTile(index));
+        this.tiles!.appendChild(this.createTile(index));
         });
     }
 
-    createGrid = () => {
-        this.wrapper!.innerHTML = "";
-        
+    generateGrid = () => {
+        // Set the grid to the size of the window
+        this.tiles!.innerHTML = "";
         const size = document.body.clientWidth > 800 ? 100 : 50;
-        
         this.columns = Math.floor(document.body.clientWidth / size);
         this.rows = Math.floor(document.body.clientHeight / size);
         
-        this.wrapper!.style.setProperty("--columns", String(this.columns));
-        this.wrapper!.style.setProperty("--rows", String(this.rows));
+        // Set the CSS grid properties
+        this.tiles!.style.setProperty("--columns", String(this.columns));
+        this.tiles!.style.setProperty("--rows", String(this.rows));
         
-        this.createTiles(this.columns * this.rows);
+        // Generate the tiles
+        this.generateTiles(this.columns * this.rows);
     }
 
 
