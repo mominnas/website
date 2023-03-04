@@ -81,7 +81,7 @@ pre {
 }
 
 q {
-	quotes: "\201C" "\201D" "\2018" "\2019";
+	quotes: "\201C""\201D""\2018""\2019";
 }
 
 small {
@@ -186,6 +186,7 @@ table {
 
 :root {
 	font-size: 16px;
+
 }
 
 body {
@@ -273,18 +274,18 @@ canvas {
 
 
 .button {
-	
+
 	--x: 50%;
 	--y: 50%;
-	
+
 	--paddingx: 28px;
 	--paddingy: 10px;
 	--borderpx: 5px;
 
 	position: relative;
 	-webkit-appearance: none;
-	   -moz-appearance: none;
-			appearance: none;
+	-moz-appearance: none;
+	appearance: none;
 	padding: var(--paddingy) var(--paddingx);
 	color: white;
 	cursor: pointer;
@@ -292,7 +293,7 @@ canvas {
 	border-radius: 100px;
 	border: 0px solid transparent;
 	background: linear-gradient(#000, #000) padding-box, radial-gradient(farthest-corner at var(--x) var(--y), #00C9A7, #845EC2) border-box;
-  }
+}
 
 
 a {
@@ -300,7 +301,7 @@ a {
 	color: var(--color-link);
 	outline: none;
 	-webkit-transition-duration: 0.5s;
-  	transition-duration: 0.5s;
+	transition-duration: 0.5s;
 }
 
 /* a:hover, a:focus {
@@ -386,7 +387,7 @@ a {
 }
 
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 600px) {
 
 	.content__title-inner {
 		font-size: 15vw;
@@ -398,7 +399,7 @@ a {
 		font-size: 5vw;
 	}
 
-	
+
 
 }
 
@@ -460,7 +461,7 @@ a {
 	grid-template-columns: 40% 20% 40%;
 	/* grid-template-columns: 50% 50%; */
 	grid-template-rows: auto auto auto;
-	grid-template-areas: "title ... links" "... scroll ..." "... ... ...";
+	grid-template-areas: "title ... links""... scroll ...""... ... ...";
 }
 
 /* .frame__scroll {
@@ -684,10 +685,10 @@ ul li:nth-child(4):hover span {
 
 
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 600px) {
 
 
-	.frame{
+	.frame {
 
 		justify-content: center;
 		grid-template-columns: auto;
@@ -695,8 +696,161 @@ ul li:nth-child(4):hover span {
 
 
 	.frame__github {
-		
+
 		display: none;
 		pointer-events: none;
 	}
+}
+
+
+
+
+
+
+
+:root {
+	--g1: rgb(98, 0, 234);
+	--g2: rgb(236, 64, 122);
+}
+
+
+@keyframes background-pan {
+	from {
+		background-position: 0% center;
+	}
+
+	to {
+		background-position: -200% center;
+	}
+}
+
+gridcard {
+	animation: background-pan 10s linear infinite;
+	background: linear-gradient(to right,
+			var(--g1),
+			var(--g2),
+			var(--g1));
+	background-size: 200%;
+	height: auto;
+	width: auto;
+	overflow: hidden;
+	margin: 0px;
+}
+
+gridcard.toggled {
+	animation: none;
+}
+
+gridcard.toggled>#title {
+	opacity: 0;
+}
+
+gridcard.toggled>#icon {
+	opacity: 1;
+}
+
+gridcard.toggled>#tiles>.tile:hover {
+	opacity: 0.1 !important;
+}
+
+.centered {
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#tiles {
+	height: calc(100vh - 1px);
+	width: calc(100vw - 1px);
+	position: relative;
+	z-index: 2;
+
+	display: grid;
+	grid-template-columns: repeat(var(--columns), 1fr);
+	grid-template-rows: repeat(var(--rows), 1fr);
+}
+
+.tile {
+	cursor: pointer;
+	position: relative;
+}
+
+.tile:hover:before {
+	background-color: rgb(30, 30, 30);
+}
+
+.tile:before {
+	background-color: rgb(15, 15, 15);
+	content: "";
+	inset: 0.5px;
+	position: absolute;
+}
+
+#title {
+	color: white;
+	font-family: "Rubik", sans-serif;
+	font-size: 6vw;
+	margin: 0px;
+	pointer-events: none;
+	transition: opacity 1200ms ease;
+	width: 50vw;
+	z-index: 3;
+}
+
+#title>.fancy {
+	color: var(--g2);
+	font-family: 'Dancing Script', cursive;
+	font-size: 1.5em;
+	line-height: 0.9em;
+}
+
+#icon {
+	color: rgba(255, 255, 255, 0.15);
+	font-size: 80vmin;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 1200ms ease;
+	z-index: 1;
+}
+
+/* -- YouTube Link Styles -- */
+
+gridcard.menu-toggled>.meta-link>span {
+	color: rgb(30, 30, 30);
+}
+
+.meta-link {
+	align-items: center;
+	backdrop-filter: blur(3px);
+	background-color: rgba(255, 255, 255, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 6px;
+	bottom: 10px;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	display: inline-flex;
+	gap: 5px;
+	left: 10px;
+	padding: 10px 20px;
+	position: fixed;
+	text-decoration: none;
+	transition: background-color 400ms, border-color 400ms;
+	z-index: 10000;
+}
+
+.meta-link:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.meta-link>i, .meta-link>span {
+	height: 20px;
+	line-height: 20px;
+}
+
+.meta-link>span {
+	color: white;
+	font-family: "Rubik", sans-serif;
+	transition: color 400ms;
 }

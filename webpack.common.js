@@ -31,6 +31,7 @@ module.exports = {
 
 	entry: {
 		app: "./src/index.ts",
+		projects: "./src/projectsEntry.ts",
 	},
 	
 	output: {

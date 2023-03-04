@@ -4,7 +4,6 @@ import "../styles.css";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { gsap } from "gsap";
 
-
 import studio from '@theatre/studio';
 import { getProject, types } from '@theatre/core';
 
@@ -88,6 +87,7 @@ export default class App {
 		this.addRemoveScroll();
 		this.addSpotLight();
 		this.addPointLight();
+
 		// Load models from repository
 		this.loadModels(
 			"https://raw.githubusercontent.com/ca-john/ca-john.github.io/main/assets/homepage_buildings.obj",
@@ -105,6 +105,7 @@ export default class App {
 		
 		this.buttonGradient();
 
+		//this.createCardGrid();
 	}
 
 
@@ -497,8 +498,6 @@ export default class App {
 		this.renderer.setSize(this.windowX, this.windowY);
 	}
 
-	onResumeClick() { }
-
 	animate() {
 		this.controls.update();
 
@@ -506,6 +505,9 @@ export default class App {
 
 		requestAnimationFrame(this.animate.bind(this));
 	}
+
+
+
 }
 
 // export function getModel(): unknown {

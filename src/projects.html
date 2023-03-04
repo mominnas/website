@@ -11,7 +11,7 @@
         <title></title>
         <!-- style and script resources -->
         <link rel="stylesheet" href="" media="all">
-        <script src=""></script>
+        <!-- <script src="/scripts/app.ts"></script> -->
         <!--meta properties -->
         <meta name="description" content=" Your site description." />
         <!--detailed robots meta https://developers.google.com/search/reference/robots_meta_tag -->
@@ -54,13 +54,42 @@
         <link rel="apple-touch-icon-precomposed" href="images/icon/cropped-cropped-favicon-1-1-180x180.png" />
         <meta name="msapplication-TileImage" content="images/icon/cropped-cropped-favicon-1-1-270x270.png" />
         <!--complete list of meta tags at - https://gist.github.com/lancejpollard/1978404 -->
+        <script>
+			document.documentElement.className = "js";
+			let supportsCssVars = function () {
+				let e,
+					t = document.createElement("style");
+				return (
+					(t.innerHTML = "root: { --tmp-var: bold; }"),
+					document.head.appendChild(t),
+					(e = !!(
+						window.CSS &&
+						window.CSS.supports &&
+						window.CSS.supports("font-weight", "var(--tmp-var)")
+					)),
+					t.parentNode.removeChild(t),
+					e
+				);
+			};
+			supportsCssVars() ||
+				alert("Please use a browser with support for CSS Variables.");
+		</script>
+		<link rel="stylesheet" href="https://use.typekit.net/vic7awf.css" />
+
     </head>
+
     <body>
+        <div class="gridcard">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+            <div id="tiles"></div>
+
+            <!-- <link rel="stylesheet" type="text/css" href="/" media="print" /> -->
+            <!-- <script src="" async defer></script> -->
+
+            <h1 id="title" class="centered"> In Progress </h1>
         
-        <link rel="stylesheet" type="text/css" href="/" media="print" />
-        <script src="" async defer></script>
+        </div>
     </body>
 </html>
