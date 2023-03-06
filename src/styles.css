@@ -186,7 +186,8 @@ table {
 
 :root {
 	font-size: 16px;
-
+	--secondary-text-color: #88ee82;
+	--primary-text-color: #ffffff;
 }
 
 body {
@@ -362,10 +363,18 @@ a {
 	display: flex;
 	margin-top: 100vh;
 	justify-content: flex-start;
-	align-items: center;
+	align-items: start;
 	place-items: center;
 	flex-direction: column;
 }
+
+
+.occupation__list {
+	list-style-type: none;
+  	margin: 0;
+  	padding: 0;
+}
+
 
 .content__title {
 	line-height: 1;
@@ -393,48 +402,32 @@ a {
 		font-size: 15vw;
 	}
 
-
 	.content__title-sub {
 
 		font-size: 5vw;
 	}
-
-
-
 }
-
-
-
-
-
-/* .content__title-inner {
-	display: block;
-	font-size: 5vw;
-	color: var(--color-text-alt);
-}
-
-.content__title-sub {
-	display: block;
-	text-align: right;
-	font-size: 1.5vw;
-	margin-right: 0.25rem;
-} */
 
 .occupation_text {
 	line-height: 2;
 	font-weight: 300;
+	color:rgb(255, 255, 255);
 }
 
 .content__text {
 	display: block;
 	font-size: 2rem;
 	text-align: left;
+	color: var(--primary-text-color);
+	
 }
 
 .sub_text {
 	display: block;
 	text-align: left;
-	font-size: 1.5rem;
+	font-size: 1rem;
+	color: var(--secondary-text-color);
+	
 }
 
 /* @media screen and (max-width: 53em) {
@@ -591,9 +584,9 @@ ul {
 ul li {
 	position: relative;
 	list-style: none;
-	width: 60px;
-	height: 60px;
-	margin: 10px 25px;
+	width: 80px;
+	height: 80px;
+	margin: 8px 35px;
 }
 
 ul li:before {
@@ -721,14 +714,39 @@ ul li:nth-child(4):hover span {
 	}
 }
 
+
+
+cards{
+
+	position: fixed;
+	text-align: left;
+	z-index: 10000;
+	display: grid;
+	align-content: space-between;
+	justify-items: left;
+	width: 100%;
+	max-width: none;
+	height: 100vh;
+	padding: 4rem;
+	pointer-events: none;
+	grid-template-rows: auto auto auto;
+	grid-template-areas: "one""two";
+
+}
+
+
+
+
+
+
 #gridcard {
-	--g1: rgb(234, 0, 0);
-	--g2: rgb(0, 170, 255);
+	--gradientstart: rgb(234, 0, 0);
+	--gradientend: rgb(0, 170, 255);
 	animation: gradient-bg 10s linear infinite;
 	background: linear-gradient(to right,
-			var(--g1),
-			var(--g2),
-			var(--g1));
+			var(--gradientstart),
+			var(--gradientend),
+			var(--gradientstart));
 	background-size: 200%;
 	height: auto;
 	width: auto;
@@ -737,21 +755,58 @@ ul li:nth-child(4):hover span {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	margin: 0px;
+	grid-area: one;
 }
 
-gridcard.toggled {
+
+#gridcard2 {
+	--gradientstart: rgb(234, 0, 0);
+	--gradientend: rgb(0, 170, 255);
+	animation: gradient-bg 10s linear infinite;
+	background: linear-gradient(to right,
+			var(--gradientstart),
+			var(--gradientend),
+			var(--gradientstart));
+	background-size: 200%;
+	height: auto;
+	width: auto;
+	overflow: hidden;
+	font-family: Futura, "futura-pt", Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	margin: 0px;
+	grid-area: two;
+}
+
+#cells2 {
+	height: calc(100vh - 1px);
+	width: calc(100vw - 1px);
+	position: relative;
+	z-index: 2;
+
+	display: grid;
+	grid-template-columns: repeat(var(--columns), 1fr);
+	grid-template-rows: repeat(var(--rows), 1fr);
+	grid-area: two;
+}
+
+
+
+
+
+#gridcard.toggled {
 	animation: none;
 }
 
-gridcard.toggled>#title {
+#gridcard.toggled>#title {
 	opacity: 0;
 }
 
-gridcard.toggled>#icon {
+#gridcard.toggled>#revealed-text {
 	opacity: 1;
 }
 
-gridcard.toggled>#tiles>.tile:hover {
+#gridcard.toggled>#cells>.cell:hover {
 	opacity: 0.1 !important;
 }
 
@@ -762,7 +817,7 @@ gridcard.toggled>#tiles>.tile:hover {
 	transform: translate(-50%, -50%);
 }
 
-#tiles {
+#cells {
 	height: calc(100vh - 1px);
 	width: calc(100vw - 1px);
 	position: relative;
@@ -773,16 +828,16 @@ gridcard.toggled>#tiles>.tile:hover {
 	grid-template-rows: repeat(var(--rows), 1fr);
 }
 
-.tile {
+.cell {
 	cursor: pointer;
 	position: relative;
 }
 
-.tile:hover:before {
-	background-color: rgb(30, 30, 30);
+.cell:hover:before {
+	background-color: rgb(40, 40, 40);
 }
 
-.tile:before {
+.cell:before {
 	background-color: rgb(15, 15, 15);
 	content: "";
 	inset: 0.5px;
@@ -792,26 +847,18 @@ gridcard.toggled>#tiles>.tile:hover {
 #title {
 	color: white;
 	font-family: "Rubik", sans-serif;
-	font-size: 6vw;
+	font-size: 4vw;
 	margin: 0px;
 	pointer-events: none;
 	transition: opacity 1200ms ease;
-	width: 50vw;
+	width: auto;
 	z-index: 3;
 }
 
-#title>.fancy {
-	color: var(--g2);
-	font-family: 'Dancing Script', cursive;
-	font-size: 1.5em;
-	line-height: 0.9em;
-}
 
-#icon {
-	color: rgba(255, 255, 255, 0.15);
-	font-size: 80vmin;
+#revealed-text {
 	opacity: 0;
 	pointer-events: none;
+	z-index: 3;
 	transition: opacity 1200ms ease;
-	z-index: 1;
 }
