@@ -584,8 +584,8 @@ ul {
 ul li {
 	position: relative;
 	list-style: none;
-	width: 80px;
-	height: 80px;
+	width: 60px;
+	height: 60px;
 	margin: 8px 35px;
 }
 
@@ -661,15 +661,15 @@ ul li:hover span:nth-child(1) {
 }
 
 ul li:nth-child(1):hover span {
-	background: #52e19f !important;
+	background: #03ff89 !important;
 }
 
 ul li:nth-child(2):hover span {
-	background: #2c3456 !important;
+	background: #2d3867 !important;
 }
 
 ul li:nth-child(3):hover span {
-	background: #ea6e96 !important;
+	background: #ff0000 !important;
 }
 
 ul li:nth-child(4):hover span {
@@ -730,12 +730,19 @@ cards{
 	padding: 4rem;
 	pointer-events: none;
 	grid-template-rows: auto auto auto;
-	grid-template-areas: "one""two";
 
 }
 
 
 
+
+
+.centered {
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
 
 
 
@@ -759,46 +766,13 @@ cards{
 }
 
 
-#gridcard2 {
-	--gradientstart: rgb(234, 0, 0);
-	--gradientend: rgb(0, 170, 255);
-	animation: gradient-bg 10s linear infinite;
-	background: linear-gradient(to right,
-			var(--gradientstart),
-			var(--gradientend),
-			var(--gradientstart));
-	background-size: 200%;
-	height: auto;
-	width: auto;
-	overflow: hidden;
-	font-family: Futura, "futura-pt", Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	margin: 0px;
-	grid-area: two;
-}
-
-#cells2 {
-	height: calc(100vh - 1px);
-	width: calc(100vw - 1px);
-	position: relative;
-	z-index: 2;
-
-	display: grid;
-	grid-template-columns: repeat(var(--columns), 1fr);
-	grid-template-rows: repeat(var(--rows), 1fr);
-	grid-area: two;
-}
-
-
-
 
 
 #gridcard.toggled {
 	animation: none;
 }
 
-#gridcard.toggled>#title {
+#gridcard.toggled>#project-name {
 	opacity: 0;
 }
 
@@ -810,15 +784,10 @@ cards{
 	opacity: 0.1 !important;
 }
 
-.centered {
-	left: 50%;
-	position: absolute;
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
+
 
 #cells {
-	height: calc(100vh - 1px);
+	height: calc(100vh - 50vh);
 	width: calc(100vw - 1px);
 	position: relative;
 	z-index: 2;
@@ -827,6 +796,8 @@ cards{
 	grid-template-columns: repeat(var(--columns), 1fr);
 	grid-template-rows: repeat(var(--rows), 1fr);
 }
+
+
 
 .cell {
 	cursor: pointer;
@@ -844,7 +815,7 @@ cards{
 	position: absolute;
 }
 
-#title {
+#project-name {
 	color: white;
 	font-family: "Rubik", sans-serif;
 	font-size: 4vw;
@@ -861,4 +832,19 @@ cards{
 	pointer-events: none;
 	z-index: 3;
 	transition: opacity 1200ms ease;
+}
+
+/* #revealed-text>p {
+	color: white;
+	font-family: "Rubik", sans-serif;
+	font-size: 2vw;
+	margin: 0px;
+	pointer-events: none;
+	transition: opacity 1200ms ease;
+	width: auto;
+	z-index: 3;
+} */
+
+.list-cards {
+	display: flex
 }
