@@ -5,7 +5,7 @@ export default class App {
     toggled: boolean;
     columns: number;
     rows: number;
-    gridCells: HTMLElement | null;
+    gridCells: Array<HTMLElement> | null;
     
     constructor() {
     
@@ -18,10 +18,13 @@ export default class App {
     
     
     init() {
-    
-        this.gridCells = document.getElementById("cells");
+        this.gridCells = new Array();
+        for (let i = 1; i < 3; i++) {
+            this.gridCells.push(document.getElementById("cells-" + i)!);
+        }
         this.generateGrid();
         window.addEventListener('resize', this.generateGrid);
+    
     }
 
     
@@ -30,7 +33,9 @@ export default class App {
 
         this.toggled = !this.toggled;
         // document.body.classList.toggle("toggled");
-        document.getElementById("gridcard")!.classList.toggle("toggled");
+        document.getElementById("gridcard-1")!.classList.toggle("toggled");
+
+        document.getElementById("gridcard-2")!.classList.toggle("toggled");
     
     }
 
@@ -39,7 +44,7 @@ export default class App {
         this.toggleHandler();
     
         anime({
-            targets: ".cell",
+            targets: ".cell-1",
             opacity: this.toggled ? 0 : 1,
             delay: anime.stagger(50, {
             grid: [this.columns, this.rows],
@@ -84,22 +89,29 @@ export default class App {
     generateCells = (quantity: number) => {
     
         Array.from(Array(quantity)).map((tile, index) => {
-            this.gridCells!.appendChild(this.createCell(index));
+            this.gridCells?.forEach((grid) => {
+                grid!.appendChild(this.createCell(index));
+            });
         });
     
     }
 
     generateGrid = () => {
         // Set the grid to the size of the window
-        this.gridCells!.innerHTML = "";
+        this.gridCells!.forEach(grid => {
+            grid!.innerHTML = "";
+        });
+        // this.gridCells!.innerHTML = "";
         const size = document.body.clientWidth > 800 ? 100 : 50;
         this.columns = Math.floor(document.body.clientWidth / size);
         this.rows = Math.floor(document.body.clientHeight / size);
         
         // Set the CSS grid properties
-        this.gridCells!.style.setProperty("--columns", String(this.columns));
-        this.gridCells!.style.setProperty("--rows", String(this.rows));
-        
+
+        this.gridCells!.forEach(grid => {
+            grid!.style.setProperty("--columns", String(this.columns));
+            grid!.style.setProperty("--rows", String(this.rows));
+        });
         // Generate the tiles
         this.generateCells(this.columns * this.rows);
     }
