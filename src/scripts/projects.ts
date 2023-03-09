@@ -46,6 +46,17 @@ export default class App {
             from: index
             })
         });
+
+
+        anime({
+            targets: ".cell-2",
+            opacity: this.toggled ? 0 : 1,
+            delay: anime.stagger(50, {
+            grid: [this.columns, this.rows],
+            from: index
+            })
+        });
+
     
     }
 
@@ -55,8 +66,11 @@ export default class App {
         const cell: HTMLDivElement = document.createElement("div");
 
         // add the class "cell" to it
-        cell.classList.add("cell");
+        cell.classList.add("cell-1");
         
+        cell.classList.add("cell-2");
+
+
         // set the opacity to 0 if it's toggled, or 1 if it isn't
         cell.style.opacity = String(this.toggled ? 0 : 1);
         
