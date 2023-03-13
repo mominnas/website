@@ -851,12 +851,8 @@ cards-1{
 
 
 
-
-
-
-
 cards-2{
-
+	
 	position: fixed;
 	text-align: left;
 	z-index: 10000;
@@ -905,8 +901,6 @@ cards-2{
 
 
 
-
-
 #gridcard-2 {
 	--gradientstart: rgb(234, 0, 0);
 	--gradientend: rgb(0, 170, 255);
@@ -927,8 +921,6 @@ cards-2{
 }
 
 
-
-
 #gridcard-2.toggled {
 	animation: none;
 }
@@ -947,6 +939,105 @@ cards-2{
 
 
 #project-name-2 {
+	color: white;
+	font-family: "Rubik", sans-serif;
+	font-size: 4vw;
+	margin: 0px;
+	pointer-events: none;
+	transition: opacity 1200ms ease;
+	width: auto;
+	z-index: 3;
+}
+
+
+
+cards-3{
+
+	position: fixed;
+	text-align: left;
+	z-index: 10000;
+	display: grid;
+	align-content: space-between;
+	justify-items: left;
+	width: 100%;
+	max-width: none;
+	height: 100vh;
+	padding: 4rem;
+	pointer-events: none;
+	grid-template-rows: auto auto auto;
+
+}
+
+
+
+#cells-3 {
+	height: calc(100vh - 50vh);
+	width: calc(100vw - 1px);
+	position: relative;
+	z-index: 2;
+	display: grid;
+	grid-template-columns: repeat(var(--columns), 1fr);
+	grid-template-rows: repeat(var(--rows), 1fr);
+}
+
+
+
+.cell-3 {
+	cursor: pointer;
+	position: relative;
+}
+
+.cell-3:hover:before {
+	background-color: rgb(40, 40, 40);
+}
+
+.cell-3:before {
+	background-color: rgb(15, 15, 15);
+	content: "";
+	inset: 0.5px;
+	position: absolute;
+}
+
+
+
+#gridcard-3 {
+	--gradientstart: rgb(234, 0, 0);
+	--gradientend: rgb(0, 170, 255);
+	animation: gradient-bg 10s linear infinite;
+	background: linear-gradient(to right,
+			var(--gradientstart),
+			var(--gradientend),
+			var(--gradientstart));
+	background-size: 200%;
+	height: auto;
+	width: auto;
+	overflow: hidden;
+	font-family: Futura, "futura-pt", Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	margin: 0px;
+	grid-area: one;
+}
+
+
+#gridcard-3.toggled {
+	animation: none;
+}
+
+#gridcard-3.toggled>#project-name-3 {
+	opacity: 0;
+}
+
+#gridcard-3.toggled>#revealed-project-text {
+	opacity: 1;
+}
+
+#gridcard-3.toggled>#cells>.cell:hover {
+	opacity: 0.1 !important;
+}
+
+
+#project-name-3 {
 	color: white;
 	font-family: "Rubik", sans-serif;
 	font-size: 4vw;

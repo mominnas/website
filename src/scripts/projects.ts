@@ -5,21 +5,22 @@ export default class App {
     toggled: boolean;
     columns: number;
     rows: number;
-    gridCells: Array<HTMLElement> | null;
+    gridCells: Array<HTMLElement>;
+    cellsList: Array<HTMLDivElement>;
     
     constructor() {
     
         this.columns = 0
         this.rows = 0
         this.toggled = false;
-        this.gridCells = null;
-    
+        this.gridCells = new Array();
+        this.cellsList = new Array();
     }
     
     
     init() {
-        this.gridCells = new Array();
-        for (let i = 1; i < 3; i++) {
+        // this.gridCells = new Array();
+        for (let i = 1; i < 4; i++) {
             this.gridCells.push(document.getElementById("cells-" + i)!);
         }
         this.generateGrid();
@@ -33,19 +34,27 @@ export default class App {
 
         this.toggled = !this.toggled;
         // document.body.classList.toggle("toggled");
-        document.getElementById("gridcard-1")!.classList.toggle("toggled");
-
-        document.getElementById("gridcard-2")!.classList.toggle("toggled");
+        for (let i = 1; i < 4; i++) {
+            document.getElementById("gridcard-" + i)!.classList.toggle("toggled");
+        }
+        // document.getElementById("gridcard-1")!.classList.toggle("toggled");
+        // document.getElementById("gridcard-2")!.classList.toggle("toggled");
+        // document.getElementById("gridcard-3")!.classList.toggle("toggled");
     
     }
 
-    clickHandler = (index: number) => {
+    clickHandler = (cellNum: number, index: number) => {
         
         this.toggleHandler();
     
         anime({
-            targets: ".cell-1",
+            targets: ".cell-"+cellNum,
             opacity: this.toggled ? 0 : 1,
+            // scale: [
+            //     {value: .1, easing: 'easeOutSine', duration: 500},
+            //     {value: 1, easing: 'easeInOutQuad', duration: 1200}
+            // ],
+            
             delay: anime.stagger(50, {
             grid: [this.columns, this.rows],
             from: index
@@ -53,14 +62,23 @@ export default class App {
         });
 
 
-        anime({
-            targets: ".cell-2",
-            opacity: this.toggled ? 0 : 1,
-            delay: anime.stagger(50, {
-            grid: [this.columns, this.rows],
-            from: index
-            })
-        });
+        // anime({
+        //     targets: ".cell-2",
+        //     opacity: this.toggled ? 0 : 1,
+        //     delay: anime.stagger(50, {
+        //     grid: [this.columns, this.rows],
+        //     from: index
+        //     })
+        // });
+
+        // anime({
+        //     targets: ".cell-3",
+        //     opacity: this.toggled ? 0 : 1,
+        //     delay: anime.stagger(50, {
+        //     grid: [this.columns, this.rows],
+        //     from: index
+        //     })
+        // });
 
     
     }
@@ -68,19 +86,28 @@ export default class App {
     createCell = (index: number) => {
         
         // create a new div element
-        const cell: HTMLDivElement = document.createElement("div");
+        const cell = null
+        for (let i = 1; i < 4; i++) {
+            const cell: HTMLDivElement = document.createElement("div");
+            cell.classList.add("cell-" + i);
+            cell.style.opacity = String(this.toggled ? 0 : 1);
+            cell.onclick = e => this.clickHandler(i, index);
+            this.cellsList.push(cell);
+            return cell;
+        }
+        // const cell: HTMLDivElement = document.createElement("div");
 
         // add the class "cell" to it
-        cell.classList.add("cell-1");
+        // cell.classList.add("cell-1");
         
-        cell.classList.add("cell-2");
+        // cell.classList.add("cell-2");
 
-
-        // set the opacity to 0 if it's toggled, or 1 if it isn't
-        cell.style.opacity = String(this.toggled ? 0 : 1);
+        // cell.classList.add("cell-3");
+        // // set the opacity to 0 if it's toggled, or 1 if it isn't
+        // cell.style.opacity = String(this.toggled ? 0 : 1);
         
         // set the onclick method to the clickHandler, passing the index
-        cell.onclick = e => this.clickHandler(index);
+        // cell.onclick = e => this.clickHandler(index);
         
         return cell;
     }
