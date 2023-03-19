@@ -86,16 +86,16 @@ export default class App {
     createCell = (index: number) => {
         
         // create a new div element
-        const cell = null
-        for (let i = 1; i < 4; i++) {
-            const cell: HTMLDivElement = document.createElement("div");
-            cell.classList.add("cell-" + i);
-            cell.style.opacity = String(this.toggled ? 0 : 1);
-            cell.onclick = e => this.clickHandler(i, index);
-            this.cellsList.push(cell);
-            return cell;
-        }
-        // const cell: HTMLDivElement = document.createElement("div");
+        
+        // for (let i = 1; i < 4; i++) {
+        //     const cell: HTMLDivElement = document.createElement("div");
+        //     cell.classList.add("cell-" + i);
+        //     cell.style.opacity = String(this.toggled ? 0 : 1);
+        //     cell.onclick = e => this.clickHandler(i, index);
+        //     this.cellsList.push(cell);
+        //     // return cell;
+        // }
+        const cell: HTMLDivElement = document.createElement("div");
 
         // add the class "cell" to it
         // cell.classList.add("cell-1");
@@ -103,11 +103,15 @@ export default class App {
         // cell.classList.add("cell-2");
 
         // cell.classList.add("cell-3");
-        // // set the opacity to 0 if it's toggled, or 1 if it isn't
-        // cell.style.opacity = String(this.toggled ? 0 : 1);
-        
+        // set the opacity to 0 if it's toggled, or 1 if it isn't
+        cell.style.opacity = String(this.toggled ? 0 : 1);
+        for (let i = 1; i < 4; i++) {
+            cell.classList.add("cell-" + i);
+            cell.onclick = e => this.clickHandler(i, index);
+            // cell.classList.add("cell-" + i);
+        }
         // set the onclick method to the clickHandler, passing the index
-        // cell.onclick = e => this.clickHandler(index);
+        
         
         return cell;
     }

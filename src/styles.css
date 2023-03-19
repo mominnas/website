@@ -780,7 +780,7 @@ cards-1{
 	opacity: 1;
 }
 
-#gridcard-1.toggled>#cells>.cell:hover {
+#gridcard-1.toggled>#cells-1>.cell-1:hover {
 	opacity: 0.1 !important;
 }
 
@@ -852,7 +852,7 @@ cards-1{
 
 
 cards-2{
-	
+
 	position: fixed;
 	text-align: left;
 	z-index: 10000;
@@ -933,7 +933,7 @@ cards-2{
 	opacity: 1;
 }
 
-#gridcard-2.toggled>#cells>.cell:hover {
+#gridcard-2.toggled>#cells-2>.cell-2:hover {
 	opacity: 0.1 !important;
 }
 
@@ -1032,7 +1032,7 @@ cards-3{
 	opacity: 1;
 }
 
-#gridcard-3.toggled>#cells>.cell:hover {
+#gridcard-3.toggled>#cells-3>.cell-3:hover {
 	opacity: 0.1 !important;
 }
 

@@ -43,7 +43,7 @@ export default class App {
 		this.renderer = new THREE.WebGLRenderer({
 			antialias: true,
 			alpha: true,
-			//precision: "lowp",
+			precision: "lowp",
 		});
 
 		this.camera = new THREE.PerspectiveCamera(20, this.windowX / this.windowY, 1, 2000);
