@@ -246,8 +246,8 @@ export default class App {
 	addSpotLight() {
 
 		// Add a spotlight to the scene to illuminate the buildings
-		const light = { color: "#f00", x: 641, y: -462, z: 509 };
-		const spotLight = new THREE.SpotLight(light.color, 5);
+		const light = { color: "#4d565c", x: 641, y: -462, z: 509 };
+		const spotLight = new THREE.SpotLight(light.color, 1);
 
 		spotLight.position.set(light.x, light.y, light.z);
 		spotLight.castShadow = true;
